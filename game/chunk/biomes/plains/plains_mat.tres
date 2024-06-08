@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://b3jg67qp7mg7c"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_i7wv4"]
+load_path = "res://.godot/imported/mud_forest_nor_gl_1k.jpg-b30041e263b479a834b853dc9f85ce32.s3tc.ctex"
+
+[resource]
+albedo_color = Color(0.33242, 0.529101, 0, 1)
+metallic = 1.0
+normal_texture = SubResource("CompressedTexture2D_i7wv4")

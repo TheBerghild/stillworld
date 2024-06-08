@@ -1,0 +1,52 @@
+[gd_scene load_steps=9 format=3 uid="uid://de5j5xqvnks0e"]
+
+[ext_resource type="PackedScene" uid="uid://blu36yhrbjqun" path="res://player/player.tscn" id="1_3pqwb"]
+[ext_resource type="Script" path="res://game/game.gd" id="1_4l3k5"]
+[ext_resource type="Script" path="res://game/handlers/chunk_loading_handler.gd" id="2_q7xoy"]
+[ext_resource type="Texture2D" uid="uid://1cjf6ki0fuk8" path="res://visuals/sunflowers_puresky_2k.hdr" id="3_vavvn"]
+[ext_resource type="PackedScene" uid="uid://kd2wgdiu7qsw" path="res://debug/debug_menu.tscn" id="6_dj78r"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_futi4"]
+panorama = ExtResource("3_vavvn")
+
+[sub_resource type="Sky" id="Sky_aiy5y"]
+sky_material = SubResource("PanoramaSkyMaterial_futi4")
+
+[sub_resource type="Environment" id="Environment_5rcbq"]
+background_mode = 2
+sky = SubResource("Sky_aiy5y")
+ambient_light_source = 3
+reflected_light_source = 2
+tonemap_mode = 2
+tonemap_exposure = 0.7
+tonemap_white = 16.0
+ssr_enabled = true
+ssao_enabled = true
+ssao_intensity = 16.0
+ssil_enabled = true
+sdfgi_enabled = true
+sdfgi_use_occlusion = true
+glow_enabled = true
+
+[node name="Game" type="Node3D"]
+script = ExtResource("1_4l3k5")
+
+[node name="StandaloneHandlers" type="Node" parent="."]
+
+[node name="ChunkLoadingHandler" type="Node" parent="StandaloneHandlers"]
+script = ExtResource("2_q7xoy")
+
+[node name="Chunks" type="Node3D" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Player" parent="." instance=ExtResource("1_3pqwb")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_5rcbq")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="DebugMenu" parent="CanvasLayer" instance=ExtResource("6_dj78r")]
