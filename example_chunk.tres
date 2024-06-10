@@ -1,7 +1,0 @@
-[gd_resource type="Resource" script_class="ChunkData" load_steps=2 format=3 uid="uid://b4is326q2mn6n"]
-
-[ext_resource type="Script" path="res://game/chunk/chunk_data.gd" id="1_smrln"]
-
-[resource]
-script = ExtResource("1_smrln")
-grids = Array[Resource("res://game/grids/grid_data.gd")]([])

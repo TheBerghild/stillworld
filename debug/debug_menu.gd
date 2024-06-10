@@ -7,7 +7,7 @@ func _ready() -> void:
 	$MarginContainer/VBoxContainer/SpinBox.call_deferred("grab_focus")
 
 func print_to_menu(key : String, value : String) -> void:
-	var label : Label = labels.get_node(key)
+	var label = labels.get_node_or_null(key)
 	if not label:
 		label = example_label.duplicate()
 		label.name = key
@@ -18,3 +18,7 @@ func print_to_menu(key : String, value : String) -> void:
 
 func _on_button_pressed() -> void:
 	Autoload.ShakeCamera.emit($MarginContainer/VBoxContainer/SpinBox.value)
+
+
+func _on_button_2_pressed() -> void:
+	GameSaver.save_game()

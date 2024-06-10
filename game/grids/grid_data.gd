@@ -1,5 +1,6 @@
 extends Resource
 
-class_name GridData
+class_name ChunkObject
 
 @export var scene : PackedScene
+@export var position : Vector2

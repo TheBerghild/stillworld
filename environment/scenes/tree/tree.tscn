@@ -1,0 +1,81 @@
+[gd_scene load_steps=10 format=3 uid="uid://cb8oow3mcbtn8"]
+
+[ext_resource type="Script" path="res://environment/scenes/tree/tree.gd" id="1_ksqpq"]
+[ext_resource type="PackedScene" uid="uid://brcpvfrfvcyj2" path="res://environment/assets/tree.glb" id="2_8ncye"]
+[ext_resource type="Script" path="res://scripts/components/attack_receiver.gd" id="3_6oroh"]
+[ext_resource type="AudioStream" uid="uid://c7d1iae1gvb6h" path="res://environment/scenes/tree/wood_chop.mp3" id="4_vygun"]
+[ext_resource type="PackedScene" uid="uid://dveqoy0g2k18a" path="res://scripts/components/health_manager/health_manager.tscn" id="5_1blyr"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vi0fi"]
+size = Vector3(1.5, 2.358, 1.4)
+
+[sub_resource type="Animation" id="Animation_gflqq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("mesh:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(5, 5, 5)]
+}
+
+[sub_resource type="Animation" id="Animation_gmits"]
+resource_name = "hit"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("mesh:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.125, 1),
+"update": 0,
+"values": [Vector3(4.8, 4.8, 4.8), Vector3(5, 5, 5)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0vm28"]
+_data = {
+"RESET": SubResource("Animation_gflqq"),
+"hit": SubResource("Animation_gmits")
+}
+
+[node name="Tree" type="Node3D"]
+script = ExtResource("1_ksqpq")
+
+[node name="mesh" parent="." instance=ExtResource("2_8ncye")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 5
+collision_mask = 0
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1628, 0)
+shape = SubResource("BoxShape3D_vi0fi")
+
+[node name="AttackReceiver" type="Node" parent="StaticBody3D" node_paths=PackedStringArray("root", "health_manager")]
+script = ExtResource("3_6oroh")
+root = NodePath("../..")
+health_manager = NodePath("../../HealthManager")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_0vm28")
+}
+
+[node name="HitSFX" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_vygun")
+unit_size = 20.0
+bus = &"SFX"
+
+[node name="HealthManager" parent="." node_paths=PackedStringArray("root") instance=ExtResource("5_1blyr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.7, 0)
+root = NodePath("..")
+max_health = 25

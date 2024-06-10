@@ -1,18 +1,23 @@
-[gd_scene load_steps=32 format=3 uid="uid://blu36yhrbjqun"]
+[gd_scene load_steps=37 format=3 uid="uid://blu36yhrbjqun"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_wje46"]
 [ext_resource type="PackedScene" uid="uid://bcoo3a35rth0q" path="res://player/characters/barbarian.glb" id="2_26hi0"]
+[ext_resource type="Script" path="res://scripts/custom_resources/attack_data.gd" id="2_lvt6n"]
 [ext_resource type="Script" path="res://player/camera.gd" id="3_q4s4b"]
-[ext_resource type="Animation" uid="uid://cfeg0ibq06kyg" path="res://player/animations/Idle.res" id="5_6thic"]
-[ext_resource type="Animation" uid="uid://bg3ubmoab08tn" path="res://player/animations/1H_Melee_Attack_Slice_Horizontal.res" id="6_8rjnb"]
-[ext_resource type="Animation" uid="uid://bx7frnikbk2xe" path="res://player/animations/Running_Strafe_Left.res" id="8_ifhay"]
-[ext_resource type="Animation" uid="uid://cfq2fx81c0iv1" path="res://player/animations/Running_Strafe_Right.res" id="9_5ttx4"]
-[ext_resource type="Animation" uid="uid://dt78k5jcqb2q4" path="res://player/animations/Running_A.res" id="9_iwyy4"]
+[ext_resource type="Animation" uid="uid://bg7huqk60c536" path="res://player/animations/Idle.res" id="5_6thic"]
+[ext_resource type="Animation" uid="uid://dta7evb14yyqb" path="res://player/animations/1H_Melee_Attack_Slice_Horizontal.res" id="6_8rjnb"]
+[ext_resource type="Animation" uid="uid://d3018oai4esqd" path="res://player/animations/Running_Strafe_Left.res" id="8_ifhay"]
+[ext_resource type="Animation" uid="uid://utgu36m8d6w1" path="res://player/animations/Running_Strafe_Right.res" id="9_5ttx4"]
+[ext_resource type="Script" path="res://player/components/attacker.gd" id="9_62cxi"]
+[ext_resource type="Animation" uid="uid://cfy5ua1nbchoq" path="res://player/animations/Running_A.res" id="9_iwyy4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kkc06"]
+size = Vector3(1.265, 0.7, 44.3077)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_xnuiw"]
 frequency = 0.0283
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_hsw6b"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_m5mme"]
 _data = {
 "1H_Melee_Attack_Slice_Horizontal": ExtResource("6_8rjnb"),
 "Idle": ExtResource("5_6thic"),
@@ -26,7 +31,7 @@ animation = &"1H_Melee_Attack_Slice_Horizontal"
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_tcc2j"]
 filter_enabled = true
-filters = ["../..", "Node", "Rig/Skeleton3D:chest", "Rig/Skeleton3D:elbowIK.l", "Rig/Skeleton3D:elbowIK.r", "Rig/Skeleton3D:hand.l", "Rig/Skeleton3D:hand.r", "Rig/Skeleton3D:handIK.l", "Rig/Skeleton3D:handIK.r", "Rig/Skeleton3D:handslot.l", "Rig/Skeleton3D:handslot.r", "Rig/Skeleton3D:head", "Rig/Skeleton3D:hips", "Rig/Skeleton3D:lowerarm.l", "Rig/Skeleton3D:lowerarm.r", "Rig/Skeleton3D:spine", "Rig/Skeleton3D:upperarm.l", "Rig/Skeleton3D:upperarm.r"]
+filters = ["../..", "../../Components/Attacker", "Node", "Rig/Skeleton3D:chest", "Rig/Skeleton3D:elbowIK.l", "Rig/Skeleton3D:elbowIK.r", "Rig/Skeleton3D:hand.l", "Rig/Skeleton3D:hand.r", "Rig/Skeleton3D:handIK.l", "Rig/Skeleton3D:handIK.r", "Rig/Skeleton3D:handslot.l", "Rig/Skeleton3D:handslot.r", "Rig/Skeleton3D:head", "Rig/Skeleton3D:hips", "Rig/Skeleton3D:lowerarm.l", "Rig/Skeleton3D:lowerarm.r", "Rig/Skeleton3D:spine", "Rig/Skeleton3D:upperarm.l", "Rig/Skeleton3D:upperarm.r"]
 fadein_time = 0.1
 fadeout_time = 0.3
 
@@ -79,9 +84,8 @@ input_0/auto_advance = false
 input_0/reset = true
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_fdw2x"]
-graph_offset = Vector2(-491.117, 43.9263)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_nttbo")
-nodes/Animation/position = Vector2(-420, 320)
+nodes/Animation/position = Vector2(-520, 280)
 nodes/Attack/node = SubResource("AnimationNodeOneShot_tcc2j")
 nodes/Attack/position = Vector2(360, 160)
 nodes/StateMachine/node = SubResource("AnimationNodeStateMachine_5jugg")
@@ -101,6 +105,7 @@ point_count = 3
 curve = SubResource("Curve_leywb")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_sy8us"]
+particle_flag_align_y = true
 direction = Vector3(0, 1, 0)
 spread = 25.0
 initial_velocity_min = 5.0
@@ -108,7 +113,9 @@ initial_velocity_max = 5.0
 scale_min = 0.5
 scale_max = 0.5
 scale_curve = SubResource("CurveTexture_d1htj")
-color = Color(0.397305, 0.00796946, 0.0822641, 1)
+color = Color(1, 1, 1, 0)
+hue_variation_min = -0.1
+hue_variation_max = 0.1
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ulgu7"]
 vertex_color_use_as_albedo = true
@@ -123,77 +130,104 @@ height = 2.2
 radial_segments = 16
 rings = 8
 
+[sub_resource type="Resource" id="Resource_sg6i4"]
+script = ExtResource("2_lvt6n")
+base_damage = 5
+critical_multiplier = 2
+critical_chance = 50
+is_splash = false
+
+[sub_resource type="BoxMesh" id="BoxMesh_m6buw"]
+
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 2
+platform_floor_layers = 4278190081
 script = ExtResource("1_wje46")
 
 [node name="Mesh" type="Node3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, 0)
 
 [node name="barbarian" parent="Mesh" instance=ExtResource("2_26hi0")]
 
 [node name="Skeleton3D" parent="Mesh/barbarian/Rig" index="0"]
-bones/1/position = Vector3(0, 0.368268, 0)
+bones/1/position = Vector3(0, 0.37162, 0)
 bones/1/rotation = Quaternion(-1.11123e-10, 0.0431578, 2.57241e-09, 0.999068)
-bones/4/rotation = Quaternion(-0.550519, -0.0570331, -0.640775, 0.532056)
-bones/5/rotation = Quaternion(3.86824e-08, -3.55053e-08, -0.511371, 0.85936)
-bones/7/rotation = Quaternion(-0.320413, -0.3387, 0.147521, 0.87227)
-bones/8/rotation = Quaternion(0.00123758, 0.00123757, -0.702549, 0.711634)
-bones/11/rotation = Quaternion(-0.609322, 0.0775618, 0.616033, 0.493167)
-bones/12/rotation = Quaternion(4.8068e-08, 4.63618e-08, 0.533916, 0.845537)
-bones/14/rotation = Quaternion(-0.319531, 0.314617, -0.229695, 0.863803)
-bones/15/rotation = Quaternion(0.00382112, 0.00450072, 0.703123, 0.711044)
+bones/4/rotation = Quaternion(-0.552618, -0.0566205, -0.637191, 0.534224)
+bones/4/scale = Vector3(0.999999, 0.999999, 1)
+bones/5/rotation = Quaternion(3.7503e-08, -5.62425e-08, -0.516153, 0.856496)
+bones/6/rotation = Quaternion(-9.73784e-11, -2.98437e-10, 0.0266581, 0.999645)
+bones/6/scale = Vector3(1, 1, 1)
+bones/7/rotation = Quaternion(-0.321758, -0.337606, 0.15056, 0.87168)
+bones/8/rotation = Quaternion(0.000808943, 0.000808936, -0.704131, 0.710069)
+bones/8/scale = Vector3(1, 1, 1)
+bones/11/rotation = Quaternion(-0.611105, 0.077093, 0.612775, 0.49509)
+bones/11/scale = Vector3(0.999999, 0.999999, 1)
+bones/12/rotation = Quaternion(3.02334e-08, 4.2873e-08, 0.538496, 0.842628)
+bones/13/rotation = Quaternion(-9.73784e-11, 2.98437e-10, -0.0266581, 0.999645)
+bones/13/scale = Vector3(1, 1, 1)
+bones/14/rotation = Quaternion(-0.320755, 0.313837, -0.232726, 0.862821)
+bones/15/rotation = Quaternion(0.00256558, 0.00302187, 0.704437, 0.709755)
+bones/15/scale = Vector3(1, 1, 1)
+bones/16/rotation = Quaternion(1.40073e-07, 1, -1.03316e-07, -9.11951e-09)
+bones/17/rotation = Quaternion(1.40073e-07, 1, -1.03316e-07, -9.11951e-09)
+bones/18/rotation = Quaternion(1.40073e-07, 1, -1.03316e-07, -9.11951e-09)
 bones/19/rotation = Quaternion(-5.80608e-11, -0.0313417, -1.88012e-09, 0.999509)
-bones/22/rotation = Quaternion(0.98935, 0.0838184, 0.0788919, 0.0890949)
-bones/23/rotation = Quaternion(0.400425, 5.62655e-08, -2.71348e-07, 0.91633)
-bones/24/rotation = Quaternion(-0.624352, -0.200486, 0.0777502, 0.750963)
-bones/26/rotation = Quaternion(0.991162, -0.0335157, 0.0297454, 0.124861)
-bones/27/rotation = Quaternion(0.444001, -5.87479e-08, 3.12242e-07, 0.896026)
-bones/28/rotation = Quaternion(-0.650146, 0.112372, -0.0238415, 0.751075)
+bones/21/rotation = Quaternion(4.44848e-36, -7.10543e-15, -6.26068e-22, 1)
+bones/22/rotation = Quaternion(0.990106, 0.0835452, 0.0783607, 0.0810512)
+bones/22/scale = Vector3(1, 1, 1)
+bones/23/rotation = Quaternion(0.379125, 6.20147e-08, -2.60251e-07, 0.925346)
+bones/24/rotation = Quaternion(-0.613158, -0.201788, 0.0738353, 0.760176)
+bones/25/scale = Vector3(1, 1, 1)
+bones/26/rotation = Quaternion(0.992071, -0.0329917, 0.029956, 0.117514)
+bones/26/scale = Vector3(1, 1, 1)
+bones/27/rotation = Quaternion(0.424914, -6.03882e-08, 2.96556e-07, 0.905234)
+bones/28/rotation = Quaternion(-0.639788, 0.112741, -0.0219952, 0.759919)
 bones/29/rotation = Quaternion(3.04791e-08, 0.920355, -0.391084, -6.94849e-08)
+bones/29/scale = Vector3(1, 1, 1)
 bones/30/rotation = Quaternion(0.707107, -2.29302e-07, -4.60552e-08, 0.707107)
 bones/31/position = Vector3(0.202182, 0.0259903, 0.205181)
 bones/31/rotation = Quaternion(-0.707107, -7.05285e-08, -7.05285e-08, 0.707107)
 bones/32/rotation = Quaternion(9.65792e-09, 1.77955e-09, 0.985719, -0.168398)
 bones/33/rotation = Quaternion(-1.04035e-07, 0.391084, 0.920355, -2.9526e-08)
+bones/33/scale = Vector3(1, 1, 1)
+bones/34/scale = Vector3(1, 1, 1)
 bones/35/rotation = Quaternion(1, -3.10863e-15, 1.94707e-07, -6.91739e-22)
 bones/37/rotation = Quaternion(0.707107, -3.82385e-08, 1.45009e-07, 0.707107)
 bones/38/rotation = Quaternion(-0.707107, -7.05285e-08, -7.05285e-08, 0.707107)
 bones/39/rotation = Quaternion(-5.83589e-09, 6.43837e-10, 0.994809, 0.101756)
 bones/40/rotation = Quaternion(-1.04035e-07, 0.391084, 0.920355, -2.95261e-08)
-bones/45/position = Vector3(0.520841, 0.7714, -0.0576374)
+bones/40/scale = Vector3(1, 1, 1)
+bones/41/rotation = Quaternion(-0.391084, -6.885e-08, -6.56288e-08, 0.920355)
+bones/41/scale = Vector3(1, 1, 1)
+bones/45/position = Vector3(0.520841, 0.77698, -0.0576374)
 bones/45/rotation = Quaternion(0.794627, -1.11759e-07, 0.607098, -5.96046e-08)
-bones/47/position = Vector3(-0.510844, 0.771399, 0.0597369)
+bones/47/position = Vector3(-0.510844, 0.77698, 0.0597369)
 bones/47/rotation = Quaternion(-0.758253, -1.52737e-07, 0.651961, -1.11759e-08)
 
 [node name="1H_Axe_Offhand" parent="Mesh/barbarian/Rig/Skeleton3D" index="0"]
-transform = Transform3D(1.18171e-06, 0.262865, 0.964832, 0.999911, -0.0128468, 0.00349912, 0.0133151, 0.964747, -0.262841, 0.516037, 0.619496, 0.0144966)
+transform = Transform3D(1.08089e-06, 0.262863, 0.964832, 0.999961, -0.00839782, 0.00228764, 0.00870429, 0.964796, -0.262853, 0.516157, 0.625339, 0.0148735)
 
 [node name="Barbarian_Round_Shield" parent="Mesh/barbarian/Rig/Skeleton3D" index="1"]
-transform = Transform3D(9.70222e-07, 0.262864, 0.964832, 0.99991, -0.0128493, 0.00350002, 0.0133178, 0.964747, -0.262841, 0.662156, 0.620251, -0.0421992)
+transform = Transform3D(8.69403e-07, 0.262863, 0.964832, 0.999961, -0.00840035, 0.00228855, 0.00870696, 0.964796, -0.262853, 0.662276, 0.625833, -0.041825)
 
 [node name="1H_Axe" parent="Mesh/barbarian/Rig/Skeleton3D" index="2"]
-transform = Transform3D(-0.00269419, -0.161505, 0.986867, 0.999936, -0.0112061, 0.000895659, 0.0109146, 0.986808, 0.161526, -0.495741, 0.624051, 0.14036)
+transform = Transform3D(-0.00179527, -0.157695, 0.987486, 0.999971, -0.0075239, 0.000615648, 0.00733327, 0.987458, 0.157704, -0.495665, 0.62993, 0.140751)
 
 [node name="2H_Axe" parent="Mesh/barbarian/Rig/Skeleton3D" index="3"]
-transform = Transform3D(-0.00269419, -0.161505, 0.986867, 0.999936, -0.0112061, 0.000895659, 0.0109146, 0.986808, 0.161526, -0.495741, 0.624051, 0.14036)
+transform = Transform3D(-0.00179527, -0.157695, 0.987486, 0.999971, -0.0075239, 0.000615648, 0.00733327, 0.987458, 0.157704, -0.495665, 0.62993, 0.140751)
 
 [node name="Mug" parent="Mesh/barbarian/Rig/Skeleton3D" index="4"]
-transform = Transform3D(-0.00269419, -0.161505, 0.986867, 0.999936, -0.0112061, 0.000895659, 0.0109146, 0.986808, 0.161526, -0.487026, 0.324053, 0.0887789)
+transform = Transform3D(-0.00179527, -0.157695, 0.987486, 0.999971, -0.0075239, 0.000615648, 0.00733327, 0.987458, 0.157704, -0.487407, 0.329741, 0.0902144)
 
 [node name="Barbarian_Hat" parent="Mesh/barbarian/Rig/Skeleton3D" index="5"]
-transform = Transform3D(0.99972, -1.40143e-09, 0.0236466, 1.39341e-09, 1, 3.55686e-10, -0.0236466, -3.22637e-10, 0.99972, -7.55726e-09, 1.17848, -1.39052e-07)
+transform = Transform3D(0.99972, -1.40143e-09, 0.0236466, 1.39341e-09, 1, 3.55686e-10, -0.0236466, -3.22637e-10, 0.99972, -7.55726e-09, 1.18183, -1.39052e-07)
 
 [node name="Barbarian_Hat" parent="Mesh/barbarian/Rig/Skeleton3D/Barbarian_Hat" index="0"]
 transform = Transform3D(1, -4.25007e-17, 0, -2.65413e-16, 1, 2.77556e-17, 0, 2.77556e-17, 1, 0, 0, 0)
 gi_mode = 2
 
 [node name="Barbarian_Cape" parent="Mesh/barbarian/Rig/Skeleton3D" index="6"]
-transform = Transform3D(0.996275, -5.14962e-09, 0.0862353, 5.13043e-09, 1, 4.44077e-10, -0.0862353, 1.8939e-15, 0.996275, -1.91641e-06, 1.17848, 2.59003e-08)
-
-[node name="Barbarian_Cape" parent="Mesh/barbarian/Rig/Skeleton3D/Barbarian_Cape" index="0"]
-transform = Transform3D(1, -6.46233e-16, 0, 2.43034e-16, 1, 1.90705e-17, 0, 3.89106e-18, 1, 0, 0, 0)
-gi_mode = 2
+transform = Transform3D(0.996275, -5.14962e-09, 0.0862353, 5.13043e-09, 1, 4.44077e-10, -0.0862353, 1.8939e-15, 0.996275, -1.91641e-06, 1.18183, 2.59003e-08)
 
 [node name="Barbarian_ArmLeft" parent="Mesh/barbarian/Rig/Skeleton3D" index="7"]
 gi_mode = 2
@@ -213,25 +247,36 @@ gi_mode = 2
 [node name="Barbarian_LegRight" parent="Mesh/barbarian/Rig/Skeleton3D" index="12"]
 gi_mode = 2
 
+[node name="AnimationPlayer" parent="Mesh/barbarian" index="1"]
+reset_on_save = false
+
+[node name="Area3D" type="Area3D" parent="Mesh"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -7.55272e-08, 0.949295, 0.86393)
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Mesh/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.77636e-14, 0, -21.5561)
+shape = SubResource("BoxShape3D_kkc06")
+
 [node name="CameraPivot" type="Node3D" parent="."]
 top_level = true
 
 [node name="Camera" type="Camera3D" parent="CameraPivot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.08722, -11)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.8, -11)
 cull_mask = 983039
-current = true
 script = ExtResource("3_q4s4b")
 noise = SubResource("FastNoiseLite_xnuiw")
 
 [node name="Node3D" type="Node3D" parent="CameraPivot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.08722, -11)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.8, -11)
 
 [node name="Animation" type="Node" parent="."]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Animation"]
-root_node = NodePath("")
+root_node = NodePath("../../Mesh/barbarian")
 libraries = {
-"": SubResource("AnimationLibrary_hsw6b")
+"": SubResource("AnimationLibrary_m5mme")
 }
 
 [node name="AnimationTree" type="AnimationTree" parent="Animation"]
@@ -242,7 +287,7 @@ anim_player = NodePath("../AnimationPlayer")
 parameters/Attack/active = false
 parameters/Attack/internal_active = false
 parameters/Attack/request = 0
-parameters/StateMachine/BlendSpace1D/blend_position = -0.548048
+parameters/StateMachine/BlendSpace1D/blend_position = 0.0027051
 parameters/TimeScale/scale = 1.0
 parameters/Transition/current_state = "state_0"
 parameters/Transition/transition_request = ""
@@ -253,7 +298,7 @@ parameters/Transition/current_index = 0
 [node name="GPUParticles3D" type="GPUParticles3D" parent="Node3D"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 emitting = false
-amount = 50
+amount = 60
 process_material = SubResource("ParticleProcessMaterial_sy8us")
 draw_pass_1 = SubResource("BoxMesh_el310")
 
@@ -265,5 +310,20 @@ shape = SubResource("CapsuleShape3D_5f86y")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 layers = 65536
 mesh = SubResource("SphereMesh_343tl")
+
+[node name="Components" type="Node" parent="."]
+
+[node name="Attacker" type="Node" parent="Components" node_paths=PackedStringArray("area_3d")]
+script = ExtResource("9_62cxi")
+area_3d = NodePath("../../Mesh/Area3D")
+attack_data = SubResource("Resource_sg6i4")
+
+[node name="AttackCooldown" type="Timer" parent="."]
+one_shot = true
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.38264, 0)
+visible = false
+mesh = SubResource("BoxMesh_m6buw")
 
 [editable path="Mesh/barbarian"]

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ChunkData" load_steps=5 format=3 uid="uid://eu5axigs8fv6"]
+
+[ext_resource type="Script" path="res://game/chunk/chunk_data.gd" id="1_76icn"]
+[ext_resource type="PackedScene" uid="uid://cgctf5125ujbl" path="res://environment/scenes/rocket/rocket.tscn" id="1_q4m02"]
+[ext_resource type="Script" path="res://game/grids/grid_data.gd" id="2_jggn1"]
+
+[sub_resource type="Resource" id="Resource_7pshy"]
+script = ExtResource("2_jggn1")
+scene = ExtResource("1_q4m02")
+position = Vector2(0, 0)
+
+[resource]
+script = ExtResource("1_76icn")
+biome = 1
+objects = Array[ExtResource("2_jggn1")]([SubResource("Resource_7pshy")])

@@ -1,84 +1,86 @@
-[gd_scene load_steps=5 format=3 uid="uid://chmj6kiuacg6b"]
+[gd_scene load_steps=15 format=3 uid="uid://chmj6kiuacg6b"]
 
 [ext_resource type="Script" path="res://game/chunk/chunk.gd" id="1_x07ov"]
+[ext_resource type="PackedScene" uid="uid://cb8oow3mcbtn8" path="res://environment/scenes/tree/tree.tscn" id="2_7d0lr"]
+[ext_resource type="Script" path="res://game/chunk/chunk_data.gd" id="2_uhg8u"]
+[ext_resource type="Script" path="res://game/grids/grid_data.gd" id="3_5eeqo"]
 
-[sub_resource type="Animation" id="Animation_wdfll"]
+[sub_resource type="Resource" id="Resource_7thww"]
+script = ExtResource("3_5eeqo")
+scene = ExtResource("2_7d0lr")
+position = Vector2(3, 4)
+
+[sub_resource type="Resource" id="Resource_vetaq"]
+script = ExtResource("3_5eeqo")
+scene = ExtResource("2_7d0lr")
+position = Vector2(1, 3)
+
+[sub_resource type="Resource" id="Resource_84tci"]
+script = ExtResource("3_5eeqo")
+position = Vector2(0, 0)
+
+[sub_resource type="Resource" id="Resource_g53h4"]
+script = ExtResource("3_5eeqo")
+position = Vector2(0, 0)
+
+[sub_resource type="Resource" id="Resource_wk6ah"]
+script = ExtResource("3_5eeqo")
+position = Vector2(0, 0)
+
+[sub_resource type="Resource" id="Resource_hqd6y"]
+script = ExtResource("3_5eeqo")
+position = Vector2(0, 0)
+
+[sub_resource type="Resource" id="Resource_cusuc"]
+script = ExtResource("2_uhg8u")
+biome = 0
+objects = Array[ExtResource("3_5eeqo")]([SubResource("Resource_7thww"), SubResource("Resource_vetaq"), SubResource("Resource_84tci"), SubResource("Resource_g53h4"), SubResource("Resource_wk6ah"), SubResource("Resource_hqd6y")])
+
+[sub_resource type="Animation" id="Animation_4ldm1"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:transparency")
+tracks/0/path = NodePath("Objects:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [1.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("../Label3D:transparency")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [1.0]
+"values": [Vector3(1, 0.001, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_yllod"]
+[sub_resource type="Animation" id="Animation_ompuu"]
 resource_name = "fade"
-length = 0.5
+length = 0.4
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:transparency")
+tracks/0/path = NodePath("Objects:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(4.28709, 3.03143),
 "update": 0,
-"values": [0.0, 1.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("../Label3D:transparency")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 1.0]
+"values": [Vector3(1, 1, 1), Vector3(1, 0.001, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_plwe3"]
 _data = {
-"RESET": SubResource("Animation_wdfll"),
-"fade": SubResource("Animation_yllod")
+"RESET": SubResource("Animation_4ldm1"),
+"fade": SubResource("Animation_ompuu")
 }
 
 [node name="Chunk" type="Node3D"]
 script = ExtResource("1_x07ov")
+chunk_data = SubResource("Resource_cusuc")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-root_node = NodePath("../Plane")
 libraries = {
 "": SubResource("AnimationLibrary_plwe3")
 }
-autoplay = "RESET"
 
-[node name="Label3D" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.42193, 0)
-pixel_size = 0.01
-billboard = 1
-render_priority = 2
-outline_render_priority = 1
-text = "5,5"
-font_size = 150
-outline_size = 56
+[node name="Objects" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.001, 0, 0, 0, 1, 0, 0, 0)

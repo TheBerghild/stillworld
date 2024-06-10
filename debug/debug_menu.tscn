@@ -4,7 +4,7 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_riyys"]
 bg_color = Color(0, 0, 0, 0.286275)
-corner_radius_bottom_right = 50
+corner_radius_bottom_right = 25
 
 [sub_resource type="LabelSettings" id="LabelSettings_fw2kl"]
 
@@ -12,7 +12,7 @@ corner_radius_bottom_right = 50
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -1627.0
+offset_right = -1617.0
 offset_bottom = -585.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -46,4 +46,12 @@ text = "Add Trauma"
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
+[node name="Button2" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Save Game"
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Button2" to="." method="_on_button_2_pressed"]

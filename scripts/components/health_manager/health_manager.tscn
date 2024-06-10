@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://dveqoy0g2k18a"]
+
+[ext_resource type="Script" path="res://scripts/components/health_manager/health_manager.gd" id="1_dgsfn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dfbtt"]
+bg_color = Color(0.0980392, 0.0980392, 0.0980392, 0.290196)
+corner_radius_top_left = 25
+corner_radius_bottom_right = 25
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_62dxy"]
+bg_color = Color(0.73569, 1, 0.542505, 1)
+corner_radius_top_left = 25
+corner_radius_bottom_right = 25
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_mkidm"]
+viewport_path = NodePath("SubViewport")
+
+[node name="HealthManager" type="Node3D"]
+script = ExtResource("1_dgsfn")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+disable_3d = true
+transparent_bg = true
+size = Vector2i(512, 75)
+
+[node name="ProgressBar" type="ProgressBar" parent="SubViewport"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_dfbtt")
+theme_override_styles/fill = SubResource("StyleBoxFlat_62dxy")
+value = 50.0
+show_percentage = false
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+billboard = 1
+texture = SubResource("ViewportTexture_mkidm")
