@@ -17,17 +17,12 @@ enum states {IDLE, RUNNING}
 
 var speed : float = 123
 var sensitivity : int = 5
-
 var can_move := true
 @export var is_indoor:= false
 
-var is_mesh_facing_backwards : bool = false :
-	set(new_value):
-		is_mesh_facing_backwards = new_value
-		if animation_tree.get("parameters/StateMachine/BlendSpace1D/blend_position") < 0:
-			get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO).tween_property(mesh, "rotation:y", PI, 0.2).as_relative()
-		else:
-			get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO).tween_property(mesh, "rotation:y", -PI, 0.2).as_relative()		
+func _ready() -> void:
+	if Autoload.player_pos != null and not is_indoor:
+		global_position = Autoload.player_pos + Vector3(0,1,0)
 
 func _physics_process(delta: float) -> void:
 	DebugMenu.print_to_menu("Is On Floor", str(is_on_floor()))
@@ -37,6 +32,8 @@ func _physics_process(delta: float) -> void:
 	if can_move:
 		velocity = calculate_velocity(delta)
 		move_and_slide()
+		if not is_indoor:
+			Autoload.player_pos = global_position
 	else:
 		state = states.IDLE
 	SimpleGrass.set_player_position(global_position)
@@ -47,6 +44,8 @@ func calculate_velocity(delta : float) -> Vector3:
 	var new_velocity : Vector3 = velocity
 	
 	if direction:
+		input_dir.x *= -1
+		mesh.rotation.y = lerp_angle(mesh.rotation.y,input_dir.angle() + PI / -2, 0.3)
 		state = states.RUNNING
 		if is_sprinting:
 			animation_tree.set("parameters/TimeScale/scale", 3)
@@ -61,19 +60,8 @@ func calculate_velocity(delta : float) -> Vector3:
 		state = states.IDLE
 		new_velocity.x = move_toward(velocity.x, 0, speed)
 		new_velocity.z = move_toward(velocity.z, 0, speed)
-		
-	if is_mesh_facing_backwards:
-		animation_tree.set("parameters/StateMachine/BlendSpace1D/blend_position", lerp(animation_tree.get("parameters/StateMachine/BlendSpace1D/blend_position"),-input_dir.x,0.3))
-	else:
-		animation_tree.set("parameters/StateMachine/BlendSpace1D/blend_position", lerp(animation_tree.get("parameters/StateMachine/BlendSpace1D/blend_position"),input_dir.x,0.3))
-		
-	if is_mesh_facing_backwards and input_dir.y < 0:
-		is_mesh_facing_backwards = false
-	elif !is_mesh_facing_backwards and input_dir.y > 0:
-		is_mesh_facing_backwards = true
-	
 	return new_velocity
-
+	
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		rotation.y -= event.relative.x / (sensitivity * 10)
@@ -86,6 +74,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		is_sprinting = false
 
 func _process(delta: float) -> void:
+	rotation.y += (Input.get_action_strength("CameraRight") - Input.get_action_strength("CameraLeft")) * sensitivity * delta/2
 	if is_indoor: return
 	if Input.is_action_pressed("Sprint"):
 		if not chunk_loading_handler.chunk_datas.keys().has(chunk_loading_handler.player_chunk_pos):
@@ -98,3 +87,4 @@ func _process(delta: float) -> void:
 	if Input.is_action_pressed("Attack") and attack_cooldown.is_stopped():
 		attack_cooldown.start()
 		animation_tree.set("parameters/Attack/request", 1)
+	

@@ -22,3 +22,10 @@ func _on_button_pressed() -> void:
 
 func _on_button_2_pressed() -> void:
 	GameSaver.save_game()
+	
+func _process(delta: float) -> void:
+	print_to_menu("Fps", str(Engine.get_frames_per_second()))	
+	
+func _physics_process(delta: float) -> void:
+	print_to_menu("Physics Fps", str	(1 / delta))	
+	

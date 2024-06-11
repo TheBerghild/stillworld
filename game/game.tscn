@@ -39,7 +39,7 @@ glow_enabled = true
 volumetric_fog_density = 0.0
 volumetric_fog_length = 1024.0
 
-[node name="Game" type="Node3D"]
+[node name="Game" type="Node3D" groups=["WaitForLoadedOnTrans"]]
 script = ExtResource("1_4l3k5")
 
 [node name="StandaloneHandlers" type="Node" parent="."]

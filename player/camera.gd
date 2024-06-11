@@ -26,7 +26,7 @@ func _process(delta):
 	camera.rotation_degrees.x = (initial_rotation.x) + max_x * get_shake_intensity() * get_noise_from_seed(0)
 	camera.rotation_degrees.y = (initial_rotation.y) + max_y * get_shake_intensity() * get_noise_from_seed(1)
 	camera.rotation_degrees.z = (initial_rotation.z) + max_z * get_shake_intensity() * get_noise_from_seed(2)
-
+	
 func _physics_process(delta: float) -> void:
 	camera_pivot.rotation.y = player.rotation.y
 	camera_pivot.global_position = lerp(camera_pivot.global_position, player.global_transform.origin, 5 *delta)
@@ -42,3 +42,4 @@ func get_shake_intensity() -> float:
 func get_noise_from_seed(_seed : int) -> float:
 	noise.seed = _seed
 	return noise.get_noise_1d(time * noise_speed)
+

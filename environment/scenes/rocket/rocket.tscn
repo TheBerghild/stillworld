@@ -1,7 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://cgctf5125ujbl"]
+[gd_scene load_steps=9 format=3 uid="uid://cgctf5125ujbl"]
 
 [ext_resource type="PackedScene" uid="uid://b5tiwv24g07a2" path="res://environment/assets/rocket.glb" id="1_3hqkl"]
 [ext_resource type="Script" path="res://environment/scenes/rocket/rocket.gd" id="1_ks1jm"]
+[ext_resource type="PackedScene" uid="uid://q786gs878osv" path="res://scripts/components/interaction_manager/interactabe_component.tscn" id="3_2too1"]
+[ext_resource type="ArrayOccluder3D" uid="uid://bfiyevoh2obg2" path="res://environment/scenes/rocket/rocket.occ" id="4_grwab"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ys4nw"]
 size = Vector3(5.12355, 0.144043, 2.70535)
@@ -12,8 +14,8 @@ size = Vector3(5.12355, 0.144043, 2.70535)
 [sub_resource type="BoxShape3D" id="BoxShape3D_duisu"]
 size = Vector3(5.12355, 0.144043, 2.10917)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_miqla"]
-size = Vector3(1, 1.98, 2.29)
+[sub_resource type="BoxShape3D" id="BoxShape3D_ghpn0"]
+size = Vector3(3.26526, 0.144043, 2.10917)
 
 [node name="Rocket" type="Node3D"]
 script = ExtResource("1_ks1jm")
@@ -39,13 +41,15 @@ shape = SubResource("BoxShape3D_duisu")
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 7.63586, 3.94348, -1.3933)
 shape = SubResource("BoxShape3D_duisu")
 
-[node name="Area3D" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.26815, 3.97609, 0)
-collision_layer = 0
-collision_mask = 2
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(-4.37114e-08, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1, 4.37114e-08, 1.91069e-15, 9.25786, 3.94348, 0.0524063)
+shape = SubResource("BoxShape3D_ghpn0")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.45693, 0, 0)
-shape = SubResource("BoxShape3D_miqla")
+[node name="InteractableComponent" parent="." instance=ExtResource("3_2too1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.60815, 3.79745, -0.132792)
+text = "Enter Rocket"
 
-[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[node name="OccluderInstance3D" type="OccluderInstance3D" parent="."]
+occluder = ExtResource("4_grwab")
+
+[connection signal="Interacted" from="InteractableComponent" to="." method="_on_interactable_component_interacted"]

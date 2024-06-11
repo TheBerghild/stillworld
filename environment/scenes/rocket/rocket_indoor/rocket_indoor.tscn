@@ -3,14 +3,12 @@
 [ext_resource type="Script" path="res://environment/scenes/rocket/rocket_indoor/rocket_indoor.gd" id="1_3lc5g"]
 [ext_resource type="PackedScene" uid="uid://c02c0qe0tde2m" path="res://environment/scenes/rocket/rocket_indoor/walls.glb" id="1_fuqg4"]
 [ext_resource type="PackedScene" uid="uid://blu36yhrbjqun" path="res://player/player.tscn" id="3_6tes7"]
+[ext_resource type="PackedScene" uid="uid://q786gs878osv" path="res://scripts/components/interaction_manager/interactabe_component.tscn" id="4_gu2ob"]
 
 [sub_resource type="Environment" id="Environment_adeah"]
 background_mode = 1
 ambient_light_source = 2
 ambient_light_color = Color(1, 1, 1, 1)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_6ale5"]
-size = Vector3(1.46, 3.233, 1.01)
 
 [node name="RocketIndoor" type="Node3D"]
 script = ExtResource("1_3lc5g")
@@ -20,16 +18,12 @@ script = ExtResource("1_3lc5g")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_adeah")
 
-[node name="Exit" type="Area3D" parent="."]
-collision_layer = 0
-collision_mask = 2
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Exit"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.806702, 11.9504)
-shape = SubResource("BoxShape3D_6ale5")
-
 [node name="Player" parent="." instance=ExtResource("3_6tes7")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 9.14923)
+transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, 0, 0, 8.09284)
 is_indoor = true
 
-[connection signal="body_entered" from="Exit" to="." method="_on_exit_body_entered"]
+[node name="InteractableComponent" parent="." instance=ExtResource("4_gu2ob")]
+transform = Transform3D(10.2478, 0, 0, 0, 10.2478, 0, 0, 0, 10.2478, 0, 1.20466, 11.9657)
+text = "Exit"
+
+[connection signal="Interacted" from="InteractableComponent" to="." method="_on_interactable_component_interacted"]

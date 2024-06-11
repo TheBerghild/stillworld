@@ -1,5 +1,7 @@
 extends Node
 
+signal ChunksLoaded
+
 const CHUNK = preload("res://game/chunk/chunk.tscn")
 const CHUNK_SIZE = 18
 
@@ -7,8 +9,8 @@ const CHUNK_SIZE = 18
 @onready var chunks: Node3D = $"../../Chunks"
 @onready var chunk_generator: Node = $"../ChunkGenerator"
 
-var updating := true
-var render_distance := 1
+var updating := false
+var render_distance := 10
 
 var player_chunk_pos : Vector2i :
 	set(new_pos):
@@ -27,9 +29,10 @@ var loaded_chunks : Array[Vector2i]
 @export var fixed_chunk_datas := {}
 var chunk_datas = GameSaver.chunk_datas
 
-
 func _ready() -> void:
-	calculate_chunks(Vector2i(0,0))
+	var player_position = Vector2(player.global_position.x,player.global_position.z)
+	player_chunk_pos = snap_vector(player_position, CHUNK_SIZE)
+	calculate_chunks(player_chunk_pos)
 
 func _physics_process(delta: float) -> void:
 	var player_position = Vector2(player.global_position.x,player.global_position.z)
@@ -37,8 +40,9 @@ func _physics_process(delta: float) -> void:
 	DebugMenu.print_to_menu("Player Chunk", "%s , %s" %[player_chunk_pos.x, player_chunk_pos.y])
 	DebugMenu.print_to_menu("Player Position", "%.3f , %.3f" %[player_position.x, player_position.y])
 
-func calculate_chunks(player_pos : Vector2i):
-	var surrounding_chunks = get_surrounding_chunks(player_chunk_pos)
+func calculate_chunks(player_pos : Vector2i, crd: int = -1):
+	if crd == -1: crd = render_distance
+	var surrounding_chunks = get_surrounding_chunks(player_chunk_pos, crd)
 	var password = chunk_loading_password
 	for chunk_pos in subtract_array(loaded_chunks, surrounding_chunks):
 		unload_chunk(chunk_pos)
@@ -47,7 +51,7 @@ func calculate_chunks(player_pos : Vector2i):
 		if loaded_chunks.has(chunk_pos): continue
 		load_chunk(chunk_pos)
 		await get_tree().process_frame
-
+	ChunksLoaded.emit()
 
 func load_chunk(pos: Vector2i):
 	if not chunk_datas.keys().has(pos):
@@ -74,12 +78,12 @@ func unload_chunk(pos: Vector2i):
 	chunk.unload()
 	chunk.name = "dying"
 
-func get_surrounding_chunks(current_tile) -> Array[Vector2i]:
+func get_surrounding_chunks(current_tile, crd) -> Array[Vector2i]:
 	var surrounding_tiles : Array[Vector2i]
 	var target_tile
-	for x in (render_distance * 2) + 1:
-		for y in (render_distance * 2) + 1:
-			target_tile = current_tile + Vector2i (x - render_distance, y - render_distance)
+	for x in (crd * 2) + 1:
+		for y in (crd * 2) + 1:
+			target_tile = current_tile + Vector2i (x - crd, y - crd)
 			surrounding_tiles.append(target_tile)
 	return surrounding_tiles
 

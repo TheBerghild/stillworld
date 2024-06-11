@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://kd2wgdiu7qsw"]
+[gd_scene load_steps=6 format=3 uid="uid://kd2wgdiu7qsw"]
 
 [ext_resource type="Script" path="res://debug/debug_menu.gd" id="1_bkj20"]
 
@@ -7,6 +7,14 @@ bg_color = Color(0, 0, 0, 0.286275)
 corner_radius_bottom_right = 25
 
 [sub_resource type="LabelSettings" id="LabelSettings_fw2kl"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_41c6d"]
+device = -1
+keycode = 91
+unicode = 287
+
+[sub_resource type="Shortcut" id="Shortcut_5t5rg"]
+events = [SubResource("InputEventKey_41c6d")]
 
 [node name="DebugMenu" type="PanelContainer"]
 anchors_preset = 15
@@ -48,7 +56,8 @@ layout_mode = 2
 
 [node name="Button2" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Save Game"
+shortcut = SubResource("Shortcut_5t5rg")
+text = "Save Game (Ğ)"
 
 [node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
