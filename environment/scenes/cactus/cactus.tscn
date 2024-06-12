@@ -1,0 +1,97 @@
+[gd_scene load_steps=15 format=3 uid="uid://bvjoqvcpw1imk"]
+
+[ext_resource type="Script" path="res://environment/scenes/cactus/cactus.gd" id="1_5ggn7"]
+[ext_resource type="Script" path="res://scripts/custom_resources/loot_data.gd" id="2_kxpg8"]
+[ext_resource type="Resource" uid="uid://dyppxgn477ihy" path="res://resources/items/treses/cactus.tres" id="3_8ggdy"]
+[ext_resource type="AudioStream" uid="uid://cr5tyrwpw1pid" path="res://environment/scenes/cactus/cactus_hit.wav" id="3_m3k5i"]
+[ext_resource type="Script" path="res://scripts/inventory/resource_scripts/slot_data.gd" id="4_erg7c"]
+[ext_resource type="PackedScene" uid="uid://cv3dsw2jkw1ym" path="res://environment/assets/cactus_tall.glb" id="5_5bygt"]
+[ext_resource type="Script" path="res://scripts/components/attack_receiver.gd" id="6_t1g3r"]
+[ext_resource type="PackedScene" uid="uid://dveqoy0g2k18a" path="res://scripts/components/health_manager/health_manager.tscn" id="8_h2rgu"]
+
+[sub_resource type="Resource" id="Resource_5lpfy"]
+script = ExtResource("4_erg7c")
+item_data = ExtResource("3_8ggdy")
+quantity = 1
+
+[sub_resource type="Resource" id="Resource_ffsye"]
+script = ExtResource("2_kxpg8")
+slot_data = SubResource("Resource_5lpfy")
+quantity_randomization = 1
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_lryal"]
+points = PackedVector3Array(-0.199461, 0.439898, -0.0805352, -0.169479, 0.439898, -0.13248, -0.100011, 0, -1.31577e-05, -0.03, 0.279929, 0.206603, -0.199461, 0.669905, -0.0805352, 0.166767, 0.213122, -0.130953, -0.0500142, 0, -0.0866092, -0.169479, 0.669905, -0.13248, -0.0500142, 0, 0.0865829, 0.029965, 0.279929, 0.206603, -0.03, 0.609999, 0.206603, -0.055522, 0.699932, 0.0961088, -0.0277504, 0.75, 0.0480478, -0.055522, 0.75, -1.31577e-05, -0.158502, 0.699858, -0.0915215, 0.196789, 0.213122, -0.0789752, 0.0499792, 0, -0.0866092, 0.166767, 0.543119, -0.130953, -0.0277504, 0.75, -0.0480741, 0.0277153, 0.75, -0.0480741, 0.0554869, 0.699932, -0.0961351, 0.0499792, 0, 0.0865829, 0.029965, 0.609999, 0.206603, -1.75387e-05, 0.639952, 0.176598, 0.0277153, 0.75, 0.0480478, 0.0999758, 0, -1.31577e-05, 0.196789, 0.543119, -0.0789752, 0.0554869, 0.75, -1.31577e-05, 0.110991, 0.699932, -1.31577e-05, 0.0554869, 0.699932, 0.0961088)
+
+[sub_resource type="Animation" id="Animation_gflqq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("mesh:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(5, 5, 5)]
+}
+
+[sub_resource type="Animation" id="Animation_gmits"]
+resource_name = "hit"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("mesh:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.125, 1),
+"update": 0,
+"values": [Vector3(4.8, 4.8, 4.8), Vector3(5, 5, 5)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0vm28"]
+_data = {
+"RESET": SubResource("Animation_gflqq"),
+"hit": SubResource("Animation_gmits")
+}
+
+[node name="Cactus" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00576758, 0.00670791, -0.00618649)
+script = ExtResource("1_5ggn7")
+loot_data = SubResource("Resource_ffsye")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+collision_layer = 5
+collision_mask = 0
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, -0.5872, 0)
+shape = SubResource("ConvexPolygonShape3D_lryal")
+
+[node name="AttackReceiver" type="Node" parent="StaticBody3D" node_paths=PackedStringArray("root", "health_manager")]
+script = ExtResource("6_t1g3r")
+root = NodePath("../..")
+health_manager = NodePath("../../HealthManager")
+
+[node name="HitSFX" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_m3k5i")
+unit_size = 20.0
+bus = &"SFX"
+
+[node name="HealthManager" parent="." node_paths=PackedStringArray("root") instance=ExtResource("8_h2rgu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.4, 0)
+root = NodePath("..")
+max_health = 10
+
+[node name="mesh" parent="." instance=ExtResource("5_5bygt")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_0vm28")
+}

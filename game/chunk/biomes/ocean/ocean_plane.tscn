@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://dckfv1frxfd3j"]
+
+[ext_resource type="Material" uid="uid://b8mes475wy25c" path="res://game/chunk/biomes/ocean/RoystanToonWaterShader.tres" id="1_c5r1b"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_qj34j"]
+material = ExtResource("1_c5r1b")
+size = Vector2(18, 18)
+
+[node name="DesertPlane" type="MeshInstance3D"]
+mesh = SubResource("PlaneMesh_qj34j")

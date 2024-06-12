@@ -23,6 +23,7 @@ Autoload="*res://scripts/autoload.gd"
 SimpleGrass="*res://addons/simplegrasstextured/singleton.tscn"
 TransitionManager="*res://gui/transition_manager/transition_manager.tscn"
 GameSaver="*res://scripts/game_saver/game_saver.gd"
+InventoryInterface="*res://gui/inventory/inventory_interface/inventory_interface.tscn"
 
 [display]
 

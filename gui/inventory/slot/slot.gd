@@ -12,6 +12,9 @@ var slot_data : SlotData
 
 func set_slot_data(new_slot_data : SlotData) -> void:
 	slot_data = new_slot_data
+	refresh()
+
+func refresh():
 	if inventory_reference:
 		inventory_reference.slot_datas[inventory_index] = slot_data
 	if not slot_data:
@@ -21,7 +24,9 @@ func set_slot_data(new_slot_data : SlotData) -> void:
 	if slot_data.quantity > 1:
 		quantity_label.text = str(slot_data.quantity)
 		quantity_label.show()
-
+	else:
+		quantity_label.hide()
+		
 func clear_slot() -> void:
 	texture_rect.texture = null
 	quantity_label.hide()

@@ -92,4 +92,4 @@ bus = &"SFX"
 [node name="HealthManager" parent="." node_paths=PackedStringArray("root") instance=ExtResource("5_1blyr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.7, 0)
 root = NodePath("..")
-max_health = 25
+max_health = 30

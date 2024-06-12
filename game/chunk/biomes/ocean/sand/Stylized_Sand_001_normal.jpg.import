@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://clm6vd2es8xm7"
-path.s3tc="res://.godot/imported/icon_radius.svg-d2b3500a305d528e2195bc11cea82c54.s3tc.ctex"
+uid="uid://4d17ssni5jiq"
+path.s3tc="res://.godot/imported/Stylized_Sand_001_normal.jpg-5f787483aa5ac87b99e0b7e8543c2de6.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/simplegrasstextured/images/icon_radius.svg"
-dest_files=["res://.godot/imported/icon_radius.svg-d2b3500a305d528e2195bc11cea82c54.s3tc.ctex"]
+source_file="res://game/chunk/biomes/ocean/sand/Stylized_Sand_001_normal.jpg"
+dest_files=["res://.godot/imported/Stylized_Sand_001_normal.jpg-5f787483aa5ac87b99e0b7e8543c2de6.s3tc.ctex"]
 
 [params]
 
@@ -20,19 +20,16 @@ compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/normal_map=0
+compress/normal_map=1
 compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
-roughness/mode=0
-roughness/src_normal=""
+roughness/mode=1
+roughness/src_normal="res://game/chunk/biomes/ocean/sand/Stylized_Sand_001_normal.jpg"
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
-process/size_limit=0
+process/size_limit=248
 detect_3d/compress_to=0
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

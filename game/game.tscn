@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://de5j5xqvnks0e"]
+[gd_scene load_steps=13 format=3 uid="uid://de5j5xqvnks0e"]
 
 [ext_resource type="Script" path="res://game/game.gd" id="1_4l3k5"]
 [ext_resource type="Script" path="res://game/handlers/chunk_loader.gd" id="2_q7xoy"]
@@ -38,6 +38,8 @@ glow_enabled = true
 volumetric_fog_density = 0.0
 volumetric_fog_length = 1024.0
 
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_ib6uk"]
+
 [node name="Game" type="Node3D" groups=["WaitForLoadedOnTrans"]]
 script = ExtResource("1_4l3k5")
 
@@ -69,3 +71,9 @@ environment = SubResource("Environment_5rcbq")
 
 [node name="Player" parent="." instance=ExtResource("5_slllj")]
 can_move = false
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("WorldBoundaryShape3D_ib6uk")

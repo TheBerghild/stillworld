@@ -18,7 +18,7 @@ func _process(delta: float) -> void:
 			0:
 				gpu_particles_3d.process_material.set("color", lerp(gpu_particles_3d.process_material.get("color"), Color.DARK_OLIVE_GREEN, 0.04))
 			1:
-				gpu_particles_3d.process_material.set("color", lerp(gpu_particles_3d.process_material.get("color"), Color.DARK_KHAKI, 0.04))
+				gpu_particles_3d.process_material.set("color", lerp(gpu_particles_3d.process_material.get("color"), Color.BISQUE, 0.04))
 	if Input.is_action_pressed("Attack") and attack_cooldown.is_stopped():
 		attack_cooldown.start()
 		animation_tree.set("parameters/Attack/request", 1)

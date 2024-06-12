@@ -6,6 +6,7 @@ signal ChunkDataUpdated
 
 var DESERT_PLANE = load("res://game/chunk/biomes/desert/desert_plane.tscn")
 var PLAINS_PLANE = load("res://game/chunk/biomes/plains/plains_plane.tscn")
+const OCEAN_PLANE = preload("res://game/chunk/biomes/ocean/ocean_plane.tscn")
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var container: Node3D = $Objects
@@ -23,6 +24,9 @@ func _ready() -> void:
 			add_child(ground)
 		1:
 			var ground = DESERT_PLANE.instantiate()
+			add_child(ground)
+		2:
+			var ground = OCEAN_PLANE.instantiate()
 			add_child(ground)
 	for index in chunk_data.objects.size():
 		spawn_object(index)

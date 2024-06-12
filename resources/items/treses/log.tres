@@ -8,5 +8,5 @@
 script = ExtResource("2_lkqae")
 name = &"LOG"
 texture = ExtResource("3_wtj6v")
-max_stack_size = 11
+max_stack_size = 128
 mesh = ExtResource("1_hudun")

@@ -18,6 +18,10 @@ var gui_visible = false :
 
 var current_area : Area3D = null:
 	set(new_area):
+		if current_area:
+			current_area.ScreenStatusChanged.emit(false)
+		if new_area:
+			new_area.ScreenStatusChanged.emit(true)
 		current_area = new_area
 		if current_area == null: gui_visible = false
 		else: 
@@ -31,7 +35,7 @@ func _ready() -> void:
 	
 func _physics_process(delta: float) -> void:
 	if current_area == null: return
-	interaction_gui.position = lerp(interaction_gui.position, camera.unproject_position(current_area.global_position), 0.1)
+	interaction_gui.position = lerp(interaction_gui.position, camera.unproject_position(current_area.global_position), 0.5)
 	search()
 
 func search():
@@ -40,13 +44,12 @@ func search():
 		gui_visible = false
 		current_area = null
 		return
-	areas.reverse()
 	for area in areas:
-		if not area.is_on_screen: continue
-		current_area = area
+		if area != current_area:
+			current_area = area
 		return
 	#TODO Maybe sort by distance here
-	gui_visible = false
+
 
 func set_text():
 	if current_area.text:
@@ -55,13 +58,15 @@ func set_text():
 		label.text = "Interact"
 
 func on_enter(area) -> void:
-	if current_area == null and area.is_on_screen:
+	if current_area == null:
 		current_area = area
 		interaction_gui.position = camera.unproject_position(area.global_position)
+
 func on_exit(area) -> void:
 	if current_area == area:
 		search()
 
 func on_button_press():
+	if Autoload.input_mode != Autoload.input_modes.GAME: return
 	if current_area:
 		current_area.emit_signal("Interacted")
