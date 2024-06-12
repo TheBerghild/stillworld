@@ -1,0 +1,73 @@
+[gd_scene load_steps=8 format=3 uid="uid://cdobloghli8j5"]
+
+[ext_resource type="Script" path="res://gui/inventory/inventory_interface/inventory_interface.gd" id="1_kkryw"]
+[ext_resource type="PackedScene" uid="uid://bnf1hwh7ei7ju" path="res://gui/inventory/inventory/inventory.tscn" id="2_ppwhw"]
+[ext_resource type="Script" path="res://gui/inventory/slot/slot.gd" id="3_7b2rw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wlaej"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u3xhh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s2o7l"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_k1uvd"]
+font_size = 18
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 4
+shadow_color = Color(0, 0, 0, 0.490196)
+
+[node name="InventoryInterface" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 642.0
+offset_top = 218.0
+offset_right = 682.0
+offset_bottom = 258.0
+script = ExtResource("1_kkryw")
+
+[node name="PlayerInventory" parent="." instance=ExtResource("2_ppwhw")]
+layout_mode = 0
+focus_on_populate = true
+
+[node name="GrabbedSlot" type="PanelContainer" parent="."]
+visible = false
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 0
+offset_left = -79.0
+offset_top = 1.0
+offset_right = -15.0
+offset_bottom = 65.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_wlaej")
+script = ExtResource("3_7b2rw")
+
+[node name="MarginContainer" type="MarginContainer" parent="GrabbedSlot"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="TextureRect" type="TextureRect" parent="GrabbedSlot/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Button" type="Button" parent="GrabbedSlot/MarginContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_u3xhh")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_s2o7l")
+
+[node name="QuantityLabel" type="Label" parent="GrabbedSlot"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 8
+text = "443"
+label_settings = SubResource("LabelSettings_k1uvd")
+horizontal_alignment = 1
+
+[connection signal="visibility_changed" from="PlayerInventory" to="." method="_on_player_inventory_visibility_changed"]
+[connection signal="button_down" from="GrabbedSlot/MarginContainer/Button" to="GrabbedSlot" method="_on_button_button_down"]

@@ -3,20 +3,19 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bb3suhq41g2w8"
-path.s3tc="res://.godot/imported/colormap.png-987f89d49226e3f758eeb06239b46743.s3tc.ctex"
+path="res://.godot/imported/colormap.png-987f89d49226e3f758eeb06239b46743.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://environment/assets/Textures/colormap.png"
-dest_files=["res://.godot/imported/colormap.png-987f89d49226e3f758eeb06239b46743.s3tc.ctex"]
+dest_files=["res://.godot/imported/colormap.png-987f89d49226e3f758eeb06239b46743.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
@@ -31,5 +30,5 @@ process/premult_alpha=false
 process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
-process/size_limit=0
+process/size_limit=56
 detect_3d/compress_to=0

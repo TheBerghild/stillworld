@@ -3,9 +3,6 @@ extends PanelContainer
 @onready var example_label: Label = $ExampleLabel
 @onready var labels: VBoxContainer = $MarginContainer/VBoxContainer
 
-func _ready() -> void:
-	$MarginContainer/VBoxContainer/SpinBox.call_deferred("grab_focus")
-
 func print_to_menu(key : String, value : String) -> void:
 	var label = labels.get_node_or_null(key)
 	if not label:

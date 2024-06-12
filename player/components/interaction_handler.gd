@@ -16,7 +16,7 @@ var gui_visible = false :
 		else:
 			animation_player.play("hide")
 
-var current_area : Area3D :
+var current_area : Area3D = null:
 	set(new_area):
 		current_area = new_area
 		if current_area == null: gui_visible = false
@@ -28,17 +28,15 @@ func _ready() -> void:
 	area_3d.area_entered.connect(on_enter)
 	area_3d.area_exited.connect(on_exit)
 	button.pressed.connect(on_button_press)
-	await get_tree().create_timer(3)
-	search()
 	
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if current_area == null: return
-	search()
 	interaction_gui.position = lerp(interaction_gui.position, camera.unproject_position(current_area.global_position), 0.1)
+	search()
 
 func search():
 	var areas : Array = area_3d.get_overlapping_areas()
-	if areas.is_empty(): 
+	if areas.is_empty():
 		gui_visible = false
 		current_area = null
 		return

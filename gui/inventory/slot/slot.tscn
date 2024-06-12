@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://vas0qbs857jf"]
+
+[ext_resource type="Script" path="res://gui/inventory/slot/slot.gd" id="1_kg12o"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u3xhh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s2o7l"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_k1uvd"]
+font_size = 18
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 4
+shadow_color = Color(0, 0, 0, 0.490196)
+
+[node name="Slot" type="PanelContainer"]
+custom_minimum_size = Vector2(64, 64)
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 1
+script = ExtResource("1_kg12o")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Button" type="Button" parent="MarginContainer"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_u3xhh")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_s2o7l")
+
+[node name="QuantityLabel" type="Label" parent="."]
+visible = false
+layout_mode = 2
+size_flags_vertical = 8
+text = "443"
+label_settings = SubResource("LabelSettings_k1uvd")
+horizontal_alignment = 1
+
+[connection signal="button_down" from="MarginContainer/Button" to="." method="_on_button_button_down"]

@@ -9,6 +9,10 @@
 background_mode = 1
 ambient_light_source = 2
 ambient_light_color = Color(1, 1, 1, 1)
+reflected_light_source = 1
+tonemap_mode = 2
+tonemap_exposure = 0.5
+tonemap_white = 0.5
 
 [node name="RocketIndoor" type="Node3D"]
 script = ExtResource("1_3lc5g")
@@ -23,7 +27,7 @@ transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, 0, 0, 8.
 is_indoor = true
 
 [node name="InteractableComponent" parent="." instance=ExtResource("4_gu2ob")]
-transform = Transform3D(10.2478, 0, 0, 0, 10.2478, 0, 0, 0, 10.2478, 0, 1.20466, 11.9657)
+transform = Transform3D(10.2478, 0, 0, 0, 10.2478, 0, 0, 0, 10.2478, 0, 1.20466, 12.5656)
 text = "Exit"
 
 [connection signal="Interacted" from="InteractableComponent" to="." method="_on_interactable_component_interacted"]

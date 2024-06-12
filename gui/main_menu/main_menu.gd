@@ -1,9 +1,9 @@
 extends Control
 
-@onready var button: Button = $Button
+@export var start_button: Button
 
-func _on_button_pressed() -> void:
+func _on_start_button_pressed() -> void:
 	TransitionManager.transition_to_file("res://game/game.tscn")
 
 func _ready() -> void:
-	button.call_deferred("grab_focus")
+	start_button.call_deferred("grab_focus")

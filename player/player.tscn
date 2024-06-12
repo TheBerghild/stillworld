@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://blu36yhrbjqun"]
+[gd_scene load_steps=47 format=3 uid="uid://blu36yhrbjqun"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_wje46"]
 [ext_resource type="PackedScene" uid="uid://bcoo3a35rth0q" path="res://player/characters/barbarian.glb" id="2_26hi0"]
@@ -11,9 +11,17 @@
 [ext_resource type="Script" path="res://player/components/attacker.gd" id="9_62cxi"]
 [ext_resource type="Animation" uid="uid://cfy5ua1nbchoq" path="res://player/animations/Running_A.res" id="9_iwyy4"]
 [ext_resource type="Script" path="res://player/components/interaction_handler.gd" id="11_pvp0x"]
+[ext_resource type="Theme" uid="uid://srv3f01l10d3" path="res://gui/default_theme.tres" id="12_7hadl"]
+[ext_resource type="Script" path="res://player/components/movement.gd" id="12_7yk86"]
+[ext_resource type="Script" path="res://player/components/item_picker.gd" id="14_7m20b"]
+[ext_resource type="PackedScene" uid="uid://cdobloghli8j5" path="res://gui/inventory/inventory_interface/inventory_interface.tscn" id="14_ene4k"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cgn4r"]
 size = Vector3(1.6, 1.22, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_343tl"]
+radial_segments = 16
+rings = 8
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_xnuiw"]
 frequency = 0.0283
@@ -71,7 +79,6 @@ input_0/auto_advance = false
 input_0/reset = true
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_fdw2x"]
-graph_offset = Vector2(-367.194, 82.1232)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_nttbo")
 nodes/Animation/position = Vector2(-520, 280)
 nodes/Attack/node = SubResource("AnimationNodeOneShot_tcc2j")
@@ -114,10 +121,6 @@ material = SubResource("StandardMaterial3D_ulgu7")
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5f86y"]
 height = 2.2
 
-[sub_resource type="SphereMesh" id="SphereMesh_343tl"]
-radial_segments = 16
-rings = 8
-
 [sub_resource type="Resource" id="Resource_sg6i4"]
 script = ExtResource("2_lvt6n")
 base_damage = 5
@@ -136,7 +139,7 @@ action = &"Interact"
 events = [SubResource("InputEventAction_riqap")]
 
 [sub_resource type="LabelSettings" id="LabelSettings_gy3co"]
-font_size = 32
+font_size = 50
 
 [sub_resource type="Animation" id="Animation_ir7vk"]
 length = 0.001
@@ -180,7 +183,8 @@ _data = {
 "show": SubResource("Animation_1pybi")
 }
 
-[sub_resource type="BoxMesh" id="BoxMesh_m6buw"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_n0o6v"]
+radius = 2.0408
 
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 2
@@ -193,38 +197,38 @@ transform = Transform3D(1, 0, 2.38419e-07, 0, 1, 0, -2.38419e-07, 0, 1, 0, 0, 0)
 [node name="barbarian" parent="Mesh" instance=ExtResource("2_26hi0")]
 
 [node name="Skeleton3D" parent="Mesh/barbarian/Rig" index="0"]
-bones/1/position = Vector3(0, 0.375876, 0)
+bones/1/position = Vector3(0, 0.368776, 0)
 bones/1/rotation = Quaternion(-1.11123e-10, 0.0431578, 2.57241e-09, 0.999068)
-bones/4/rotation = Quaternion(-0.554305, -0.0572518, -0.637736, 0.531753)
+bones/4/rotation = Quaternion(-0.55117, -0.0565062, -0.638248, 0.53447)
 bones/4/scale = Vector3(0.999999, 0.999999, 1)
-bones/5/rotation = Quaternion(5.30446e-09, -6.04027e-08, -0.51337, 0.858167)
+bones/5/rotation = Quaternion(2.77672e-08, -6.79119e-08, -0.515595, 0.856832)
 bones/6/rotation = Quaternion(-9.73784e-11, -2.98437e-10, 0.0266581, 0.999645)
 bones/6/scale = Vector3(1, 1, 1)
-bones/7/rotation = Quaternion(-0.321876, -0.33525, 0.150338, 0.872583)
-bones/8/rotation = Quaternion(0.000588371, 0.00058836, -0.704944, 0.709263)
+bones/7/rotation = Quaternion(-0.321222, -0.338967, 0.149564, 0.871521)
+bones/8/rotation = Quaternion(0.00105381, 0.00105381, -0.703228, 0.710963)
 bones/8/scale = Vector3(1, 1, 1)
-bones/11/rotation = Quaternion(-0.612713, 0.0775984, 0.613106, 0.492608)
+bones/11/rotation = Quaternion(-0.609802, 0.0770504, 0.613804, 0.495429)
 bones/11/scale = Vector3(0.999999, 0.999999, 1)
-bones/12/rotation = Quaternion(3.48601e-08, 5.61274e-08, 0.53583, 0.844326)
+bones/12/rotation = Quaternion(2.76662e-08, 4.39921e-08, 0.537961, 0.84297)
 bones/13/rotation = Quaternion(-9.73784e-11, 2.98437e-10, -0.0266581, 0.999645)
 bones/13/scale = Vector3(1, 1, 1)
-bones/14/rotation = Quaternion(-0.320717, 0.311351, -0.232411, 0.863821)
-bones/15/rotation = Quaternion(0.00188573, 0.00222112, 0.705147, 0.709055)
+bones/14/rotation = Quaternion(-0.320328, 0.315141, -0.231771, 0.862762)
+bones/15/rotation = Quaternion(0.00329632, 0.00388258, 0.703673, 0.710506)
 bones/15/scale = Vector3(1, 1, 1)
 bones/16/rotation = Quaternion(1.40073e-07, 1, -1.03316e-07, -9.11951e-09)
 bones/17/rotation = Quaternion(1.40073e-07, 1, -1.03316e-07, -9.11951e-09)
 bones/18/rotation = Quaternion(1.40073e-07, 1, -1.03316e-07, -9.11951e-09)
 bones/19/rotation = Quaternion(-5.80608e-11, -0.0313417, -1.88012e-09, 0.999509)
 bones/21/rotation = Quaternion(4.44848e-36, -7.10543e-15, -6.26068e-22, 1)
-bones/22/rotation = Quaternion(0.991037, 0.0832856, 0.0776176, 0.0698873)
+bones/22/rotation = Quaternion(0.989431, 0.083787, 0.0788371, 0.0882629)
 bones/22/scale = Vector3(1, 1, 1)
-bones/23/rotation = Quaternion(0.349668, 6.50204e-08, -2.51247e-07, 0.936874)
-bones/24/rotation = Quaternion(-0.597732, -0.203422, 0.0685843, 0.77242)
+bones/23/rotation = Quaternion(0.39822, 6.16969e-08, -2.69821e-07, 0.91729)
+bones/24/rotation = Quaternion(-0.623192, -0.200626, 0.0773406, 0.751931)
 bones/25/scale = Vector3(1, 1, 1)
-bones/26/rotation = Quaternion(0.993224, -0.032309, 0.0302387, 0.107462)
+bones/26/rotation = Quaternion(0.991259, -0.0334604, 0.0297675, 0.124097)
 bones/26/scale = Vector3(1, 1, 1)
-bones/27/rotation = Quaternion(0.398858, -6.02124e-08, 2.78678e-07, 0.917013)
-bones/28/rotation = Quaternion(-0.625723, 0.113184, -0.0195393, 0.771543)
+bones/27/rotation = Quaternion(0.442017, -5.83809e-08, 3.0899e-07, 0.897007)
+bones/28/rotation = Quaternion(-0.649068, 0.112412, -0.0236478, 0.752008)
 bones/29/rotation = Quaternion(3.04791e-08, 0.920355, -0.391084, -6.94849e-08)
 bones/29/scale = Vector3(1, 1, 1)
 bones/30/rotation = Quaternion(0.707107, -2.29302e-07, -4.60552e-08, 0.707107)
@@ -242,35 +246,31 @@ bones/40/rotation = Quaternion(-1.04035e-07, 0.391084, 0.920355, -2.95261e-08)
 bones/40/scale = Vector3(1, 1, 1)
 bones/41/rotation = Quaternion(-0.391084, -6.885e-08, -6.56288e-08, 0.920355)
 bones/41/scale = Vector3(1, 1, 1)
-bones/45/position = Vector3(0.520841, 0.779973, -0.0576374)
+bones/45/position = Vector3(0.520841, 0.773731, -0.0576374)
 bones/45/rotation = Quaternion(0.794627, -1.11759e-07, 0.607098, -5.96046e-08)
-bones/47/position = Vector3(-0.510844, 0.779973, 0.0597369)
+bones/47/position = Vector3(-0.510844, 0.773731, 0.0597369)
 bones/47/rotation = Quaternion(-0.758253, -1.52737e-07, 0.651961, -1.11759e-08)
 
 [node name="1H_Axe_Offhand" parent="Mesh/barbarian/Rig/Skeleton3D" index="0"]
-transform = Transform3D(7.6564e-07, 0.262863, 0.964832, 0.999979, -0.00610787, 0.00166431, 0.00633113, 0.964813, -0.262858, 0.516244, 0.628457, 0.0147313)
+transform = Transform3D(1.50348e-06, 0.262864, 0.964832, 0.999935, -0.0109399, 0.00298005, 0.011339, 0.96477, -0.262847, 0.516077, 0.622071, 0.0147969)
 
 [node name="Barbarian_Round_Shield" parent="Mesh/barbarian/Rig/Skeleton3D" index="1"]
-transform = Transform3D(5.5415e-07, 0.262863, 0.964832, 0.999979, -0.0061104, 0.00166522, 0.0063338, 0.964813, -0.262858, 0.662363, 0.628816, -0.0419681)
+transform = Transform3D(1.29199e-06, 0.262864, 0.964832, 0.999935, -0.0109424, 0.00298096, 0.0113417, 0.96477, -0.262847, 0.662197, 0.622714, -0.0419001)
 
 [node name="1H_Axe" parent="Mesh/barbarian/Rig/Skeleton3D" index="2"]
-transform = Transform3D(-0.00131351, -0.15563, 0.987814, 0.999984, -0.00552881, 0.00045773, 0.0053908, 0.987799, 0.155635, -0.495718, 0.633011, 0.140617)
+transform = Transform3D(-0.00231694, -0.159913, 0.987128, 0.999952, -0.00966719, 0.000780073, 0.00941864, 0.987083, 0.159928, -0.49567, 0.626664, 0.140666)
 
 [node name="2H_Axe" parent="Mesh/barbarian/Rig/Skeleton3D" index="3"]
-transform = Transform3D(-0.00131351, -0.15563, 0.987814, 0.999984, -0.00552881, 0.00045773, 0.0053908, 0.987799, 0.155635, -0.495718, 0.633011, 0.140617)
+transform = Transform3D(-0.00231694, -0.159913, 0.987128, 0.999952, -0.00966719, 0.000780073, 0.00941864, 0.987083, 0.159928, -0.49567, 0.626664, 0.140666)
 
 [node name="Mug" parent="Mesh/barbarian/Rig/Skeleton3D" index="4"]
-transform = Transform3D(-0.00131351, -0.15563, 0.987814, 0.999984, -0.00552881, 0.00045773, 0.0053908, 0.987799, 0.155635, -0.487706, 0.332721, 0.0906474)
+transform = Transform3D(-0.00231694, -0.159913, 0.987128, 0.999952, -0.00966719, 0.000780073, 0.00941864, 0.987083, 0.159928, -0.487146, 0.326585, 0.0895212)
 
 [node name="Barbarian_Hat" parent="Mesh/barbarian/Rig/Skeleton3D" index="5"]
-transform = Transform3D(0.99972, -1.40143e-09, 0.0236466, 1.39341e-09, 1, 3.55686e-10, -0.0236466, -3.22637e-10, 0.99972, -7.55726e-09, 1.18609, -1.39052e-07)
-
-[node name="Barbarian_Hat" parent="Mesh/barbarian/Rig/Skeleton3D/Barbarian_Hat" index="0"]
-transform = Transform3D(1, -4.25007e-17, 0, -2.65413e-16, 1, 2.77556e-17, 0, 2.77556e-17, 1, 0, 0, 0)
-gi_mode = 2
+transform = Transform3D(0.99972, -1.40143e-09, 0.0236466, 1.39341e-09, 1, 3.55686e-10, -0.0236466, -3.22637e-10, 0.99972, -7.55726e-09, 1.17899, -1.39052e-07)
 
 [node name="Barbarian_Cape" parent="Mesh/barbarian/Rig/Skeleton3D" index="6"]
-transform = Transform3D(0.996275, -5.14962e-09, 0.0862353, 5.13043e-09, 1, 4.44077e-10, -0.0862353, 1.8939e-15, 0.996275, -1.91641e-06, 1.18609, 2.59003e-08)
+transform = Transform3D(0.996275, -5.14962e-09, 0.0862353, 5.13043e-09, 1, 4.44077e-10, -0.0862353, 1.8939e-15, 0.996275, -1.91641e-06, 1.17899, 2.59003e-08)
 
 [node name="Barbarian_ArmLeft" parent="Mesh/barbarian/Rig/Skeleton3D" index="7"]
 gi_mode = 2
@@ -301,6 +301,12 @@ collision_mask = 4
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Mesh/Area3D"]
 shape = SubResource("BoxShape3D_cgn4r")
 
+[node name="GrassDeformerMesh" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(1, 0, -2.38419e-07, 0, 1, 0, 2.38419e-07, 0, 1, 0, 0.4, 0)
+layers = 65536
+mesh = SubResource("SphereMesh_343tl")
+skeleton = NodePath("../..")
+
 [node name="CameraPivot" type="Node3D" parent="."]
 top_level = true
 
@@ -324,7 +330,7 @@ libraries = {
 [node name="AnimationTree" type="AnimationTree" parent="Animation"]
 root_node = NodePath("../../Mesh/barbarian")
 tree_root = SubResource("AnimationNodeBlendTree_fdw2x")
-advance_expression_base_node = NodePath("../..")
+advance_expression_base_node = NodePath("../../Components/Movement")
 anim_player = NodePath("../AnimationPlayer")
 parameters/Attack/active = false
 parameters/Attack/internal_active = false
@@ -346,11 +352,6 @@ draw_pass_1 = SubResource("BoxMesh_el310")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
 shape = SubResource("CapsuleShape3D_5f86y")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
-layers = 65536
-mesh = SubResource("SphereMesh_343tl")
 
 [node name="Components" type="Node3D" parent="."]
 
@@ -379,6 +380,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 scale = Vector2(1e-05, 1)
 mouse_filter = 2
+theme = ExtResource("12_7hadl")
 
 [node name="PanelContainer" type="PanelContainer" parent="Components/InteractionHandler/CanvasLayer/InteractionGUI"]
 layout_mode = 0
@@ -422,12 +424,28 @@ libraries = {
 "": SubResource("AnimationLibrary_yrcwj")
 }
 
+[node name="Movement" type="Node" parent="Components"]
+script = ExtResource("12_7yk86")
+
+[node name="ItemPicker" type="Node3D" parent="Components"]
+script = ExtResource("14_7m20b")
+
+[node name="Area3D" type="Area3D" parent="Components/ItemPicker"]
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Components/ItemPicker/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("SphereShape3D_n0o6v")
+
 [node name="AttackCooldown" type="Timer" parent="."]
 one_shot = true
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.38264, 0)
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="InventoryInterface" parent="CanvasLayer" instance=ExtResource("14_ene4k")]
 visible = false
-mesh = SubResource("BoxMesh_m6buw")
+
+[connection signal="area_entered" from="Components/ItemPicker/Area3D" to="Components/ItemPicker" method="_on_area_3d_area_entered"]
 
 [editable path="Mesh/barbarian"]

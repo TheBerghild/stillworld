@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://bnf1hwh7ei7ju"]
+
+[ext_resource type="Script" path="res://gui/inventory/inventory/inventory.gd" id="1_mar5w"]
+
+[node name="Inventory" type="PanelContainer"]
+offset_right = 22.0
+offset_bottom = 22.0
+script = ExtResource("1_mar5w")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 11
+theme_override_constants/margin_top = 11
+theme_override_constants/margin_right = 11
+theme_override_constants/margin_bottom = 11
+
+[node name="ItemGrid" type="GridContainer" parent="MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+columns = 5
+
+[node name="Timer" type="Timer" parent="."]

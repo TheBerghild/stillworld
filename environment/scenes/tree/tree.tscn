@@ -1,10 +1,23 @@
-[gd_scene load_steps=10 format=3 uid="uid://cb8oow3mcbtn8"]
+[gd_scene load_steps=15 format=3 uid="uid://cb8oow3mcbtn8"]
 
 [ext_resource type="Script" path="res://environment/scenes/tree/tree.gd" id="1_ksqpq"]
 [ext_resource type="PackedScene" uid="uid://brcpvfrfvcyj2" path="res://environment/assets/tree.glb" id="2_8ncye"]
+[ext_resource type="Script" path="res://scripts/custom_resources/loot_data.gd" id="2_kp3tr"]
 [ext_resource type="Script" path="res://scripts/components/attack_receiver.gd" id="3_6oroh"]
+[ext_resource type="Resource" uid="uid://n1qlc7s16ui4" path="res://resources/items/treses/log.tres" id="3_pf8dq"]
+[ext_resource type="Script" path="res://scripts/inventory/resource_scripts/slot_data.gd" id="4_kbna1"]
 [ext_resource type="AudioStream" uid="uid://c7d1iae1gvb6h" path="res://environment/scenes/tree/wood_chop.mp3" id="4_vygun"]
 [ext_resource type="PackedScene" uid="uid://dveqoy0g2k18a" path="res://scripts/components/health_manager/health_manager.tscn" id="5_1blyr"]
+
+[sub_resource type="Resource" id="Resource_t41sw"]
+script = ExtResource("4_kbna1")
+item_data = ExtResource("3_pf8dq")
+quantity = 4
+
+[sub_resource type="Resource" id="Resource_bojsf"]
+script = ExtResource("2_kp3tr")
+slot_data = SubResource("Resource_t41sw")
+quantity_randomization = 1
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vi0fi"]
 size = Vector3(1.5, 2.358, 1.4)
@@ -48,6 +61,7 @@ _data = {
 
 [node name="Tree" type="Node3D"]
 script = ExtResource("1_ksqpq")
+loot_data = SubResource("Resource_bojsf")
 
 [node name="mesh" parent="." instance=ExtResource("2_8ncye")]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
