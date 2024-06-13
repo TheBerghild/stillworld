@@ -13,14 +13,6 @@
 [ext_resource type="Theme" uid="uid://srv3f01l10d3" path="res://gui/default_theme.tres" id="11_7q2bi"]
 [ext_resource type="Script" path="res://gui/hud/enemy_health_bar.gd" id="11_nos2s"]
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_g5ttc"]
-noise_type = 2
-frequency = 1.0
-fractal_type = 0
-fractal_lacunarity = 4.325
-cellular_return_type = 0
-domain_warp_amplitude = 30.15
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m1f3e"]
 shader = ExtResource("6_81wj1")
 shader_parameter/day_top_color = Color(0.625634, 0.786369, 0.86881, 1)
@@ -292,6 +284,14 @@ _data = {
 "night": SubResource("Animation_bc5me")
 }
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_g5ttc"]
+noise_type = 2
+frequency = 1.0
+fractal_type = 0
+fractal_lacunarity = 4.325
+cellular_return_type = 0
+domain_warp_amplitude = 30.15
+
 [node name="Game" type="Node3D" groups=["WaitForLoadedOnTrans"]]
 script = ExtResource("1_4l3k5")
 
@@ -308,21 +308,6 @@ light_energy = 0.4
 light_indirect_energy = 0.4
 light_volumetric_fog_energy = 0.4
 shadow_enabled = true
-
-[node name="StandaloneHandlers" type="Node" parent="."]
-
-[node name="ChunkLoader" type="Node" parent="StandaloneHandlers"]
-script = ExtResource("2_q7xoy")
-fixed_chunk_datas = {
-Vector2i(1, 0): ExtResource("3_0gome")
-}
-
-[node name="ChunkGenerator" type="Node" parent="StandaloneHandlers"]
-script = ExtResource("3_v5fjo")
-noise = SubResource("FastNoiseLite_g5ttc")
-
-[node name="IndoorsHandler" type="Node" parent="StandaloneHandlers"]
-script = ExtResource("5_2kpmc")
 
 [node name="Chunks" type="Node3D" parent="."]
 
@@ -456,5 +441,20 @@ fov = 128.0
 
 [node name="IndoorScenes" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -75.6673, 0)
+
+[node name="StandaloneHandlers" type="Node" parent="."]
+
+[node name="ChunkLoader" type="Node" parent="StandaloneHandlers"]
+script = ExtResource("2_q7xoy")
+fixed_chunk_datas = {
+Vector2i(1, 0): ExtResource("3_0gome")
+}
+
+[node name="ChunkGenerator" type="Node" parent="StandaloneHandlers"]
+script = ExtResource("3_v5fjo")
+noise = SubResource("FastNoiseLite_g5ttc")
+
+[node name="IndoorsHandler" type="Node" parent="StandaloneHandlers"]
+script = ExtResource("5_2kpmc")
 
 [connection signal="timeout" from="HUD/EnemyHealthBar/HideTimer" to="HUD/EnemyHealthBar" method="_on_hide_timer_timeout"]

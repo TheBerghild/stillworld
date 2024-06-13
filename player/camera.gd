@@ -29,9 +29,10 @@ func _process(delta):
 	
 func _physics_process(delta: float) -> void:
 	camera_pivot.rotation.y = player.rotation.y
-	camera_pivot.global_position = lerp(camera_pivot.global_position, player.global_transform.origin, 5 *delta)
+	camera_pivot.global_position = lerp(camera_pivot.global_position, player.global_transform.origin, 5 * delta)
 	node_3d.look_at(player.global_position)
 	initial_rotation = node_3d.rotation_degrees
+
 func add_trauma(trauma_amount : float):
 	trauma = clamp(trauma + trauma_amount, 0.0, 1.0)
 

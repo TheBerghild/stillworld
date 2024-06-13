@@ -17,6 +17,6 @@ theme_override_constants/margin_bottom = 11
 [node name="ItemGrid" type="GridContainer" parent="MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-columns = 5
+columns = 6
 
 [node name="Timer" type="Timer" parent="."]

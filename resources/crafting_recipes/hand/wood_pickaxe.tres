@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CraftingRecipe" load_steps=5 format=3 uid="uid://cgb3nadofyh78"]
+
+[ext_resource type="Resource" uid="uid://n1qlc7s16ui4" path="res://resources/items/treses/log.tres" id="1_731rx"]
+[ext_resource type="Script" path="res://scripts/inventory/resource_scripts/slot_data.gd" id="2_0i4m7"]
+[ext_resource type="Script" path="res://scripts/custom_resources/crafting_recipe.gd" id="3_lgqwe"]
+
+[sub_resource type="Resource" id="Resource_e4noj"]
+script = ExtResource("2_0i4m7")
+item_data = ExtResource("1_731rx")
+quantity = 11
+
+[resource]
+script = ExtResource("3_lgqwe")
+input = Array[ExtResource("2_0i4m7")]([SubResource("Resource_e4noj")])
+output = Array[ExtResource("2_0i4m7")]([null])

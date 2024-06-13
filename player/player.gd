@@ -8,10 +8,9 @@ extends CharacterBody3D
 @onready var camera_pivot: Node3D = $CameraPivot
 
 @export var can_move := true
-@export var is_indoor:= false
 
 func _process(delta: float) -> void:
-	if is_indoor or Autoload.input_mode != Autoload.input_modes.GAME: return
+	if Autoload.input_mode != Autoload.input_modes.GAME: return
 	if Input.is_action_pressed("Sprint"):
 		if not chunk_loading_handler.chunk_datas.keys().has(chunk_loading_handler.player_chunk_pos):
 			return

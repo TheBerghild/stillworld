@@ -17,13 +17,10 @@ shadow_size = 4
 shadow_color = Color(0, 0, 0, 0.490196)
 
 [node name="InventoryInterface" type="Control"]
-visible = false
 layout_mode = 3
 anchors_preset = 0
-offset_left = 642.0
-offset_top = 218.0
-offset_right = 682.0
-offset_bottom = 258.0
+offset_right = 40.0
+offset_bottom = 40.0
 script = ExtResource("1_kkryw")
 
 [node name="PlayerInventory" parent="." instance=ExtResource("2_ppwhw")]
@@ -31,7 +28,6 @@ layout_mode = 0
 focus_on_populate = true
 
 [node name="GrabbedSlot" type="PanelContainer" parent="."]
-visible = false
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 0
 offset_left = -79.0

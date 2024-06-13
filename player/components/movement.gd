@@ -21,8 +21,6 @@ func _physics_process(delta: float) -> void:
 	if player.can_move:
 		player.velocity = calculate_velocity(delta)
 		player.move_and_slide()
-		if not player.is_indoor:
-			Autoload.player_pos = player.global_position
 	else:
 		state = states.IDLE
 
@@ -56,7 +54,6 @@ func calculate_velocity(delta : float) -> Vector3:
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Autoload.input_mode == Autoload.input_modes.GAME:
 		player.rotation.y -= event.relative.x / (sensitivity * 10)
-	if player.is_indoor: return
 	if event.is_action_pressed("Sprint"):
 		gpu_particles_3d.emitting = true
 		is_sprinting = true
