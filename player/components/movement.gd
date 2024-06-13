@@ -12,7 +12,7 @@ var state : states = states.IDLE
 
 enum states {IDLE, RUNNING}
 
-var speed : float = 123
+var speed : float = 200
 var sensitivity : int = 5
 
 func _physics_process(delta: float) -> void:

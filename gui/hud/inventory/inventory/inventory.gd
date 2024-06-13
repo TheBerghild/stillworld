@@ -1,6 +1,6 @@
 extends PanelContainer
 
-const SLOT = preload("res://gui/inventory/slot/slot.tscn")
+const SLOT = preload("res://gui/hud/inventory/slot/slot.tscn")
 
 @onready var item_grid : GridContainer = %ItemGrid
 @onready var inventory_interface: Control = $".."

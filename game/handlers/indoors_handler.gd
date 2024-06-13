@@ -26,6 +26,8 @@ func enter_scene(scene : PackedScene):
 func return_to_world():
 	TransitionManager.close()
 	await TransitionManager.Finished
+	for child in indoor_scenes.get_children():
+		child.queue_free()
 	player.global_position = last_player_pos
 	chunks.show()
 	player.sync_camera()

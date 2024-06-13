@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://environment/scenes/rocket/rocket_indoor/rocket_indoor.gd" id="1_3lc5g"]
 [ext_resource type="PackedScene" uid="uid://c02c0qe0tde2m" path="res://environment/scenes/rocket/rocket_indoor/walls.glb" id="1_fuqg4"]
-[ext_resource type="PackedScene" uid="uid://q786gs878osv" path="res://scripts/components/interaction_manager/interactabe_component.tscn" id="4_gu2ob"]
+[ext_resource type="PackedScene" uid="uid://q786gs878osv" path="res://scripts/components/interactable_component/interactabe_component.tscn" id="4_gu2ob"]
 
 [sub_resource type="Environment" id="Environment_adeah"]
 background_mode = 1

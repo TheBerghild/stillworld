@@ -1,13 +1,12 @@
-[gd_scene load_steps=15 format=3 uid="uid://bvjoqvcpw1imk"]
+[gd_scene load_steps=14 format=3 uid="uid://bvjoqvcpw1imk"]
 
 [ext_resource type="Script" path="res://environment/scenes/cactus/cactus.gd" id="1_5ggn7"]
 [ext_resource type="Script" path="res://scripts/custom_resources/loot_data.gd" id="2_kxpg8"]
 [ext_resource type="Resource" uid="uid://dyppxgn477ihy" path="res://resources/items/treses/cactus.tres" id="3_8ggdy"]
 [ext_resource type="AudioStream" uid="uid://cr5tyrwpw1pid" path="res://environment/scenes/cactus/cactus_hit.wav" id="3_m3k5i"]
 [ext_resource type="Script" path="res://scripts/inventory/resource_scripts/slot_data.gd" id="4_erg7c"]
-[ext_resource type="PackedScene" uid="uid://cv3dsw2jkw1ym" path="res://environment/assets/cactus_tall.glb" id="5_5bygt"]
+[ext_resource type="PackedScene" uid="uid://d4m4edxwddu1i" path="res://environment/assets/cactus_tall.glb" id="5_5bygt"]
 [ext_resource type="Script" path="res://scripts/components/attack_receiver.gd" id="6_t1g3r"]
-[ext_resource type="PackedScene" uid="uid://dveqoy0g2k18a" path="res://scripts/components/health_manager/health_manager.tscn" id="8_h2rgu"]
 
 [sub_resource type="Resource" id="Resource_5lpfy"]
 script = ExtResource("4_erg7c")
@@ -73,20 +72,16 @@ collision_mask = 0
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, -0.5872, 0)
 shape = SubResource("ConvexPolygonShape3D_lryal")
 
-[node name="AttackReceiver" type="Node" parent="StaticBody3D" node_paths=PackedStringArray("root", "health_manager")]
+[node name="AttackReceiver" type="Node" parent="StaticBody3D" node_paths=PackedStringArray("root")]
 script = ExtResource("6_t1g3r")
 root = NodePath("../..")
-health_manager = NodePath("../../HealthManager")
+max_health = 10
+text = "Cactus"
 
 [node name="HitSFX" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("3_m3k5i")
 unit_size = 20.0
 bus = &"SFX"
-
-[node name="HealthManager" parent="." node_paths=PackedStringArray("root") instance=ExtResource("8_h2rgu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.4, 0)
-root = NodePath("..")
-max_health = 10
 
 [node name="mesh" parent="." instance=ExtResource("5_5bygt")]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)

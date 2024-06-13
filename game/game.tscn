@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://de5j5xqvnks0e"]
+[gd_scene load_steps=27 format=3 uid="uid://de5j5xqvnks0e"]
 
 [ext_resource type="Script" path="res://game/game.gd" id="1_4l3k5"]
 [ext_resource type="Script" path="res://game/handlers/chunk_loader.gd" id="2_q7xoy"]
@@ -7,8 +7,11 @@
 [ext_resource type="Script" path="res://game/handlers/indoors_handler.gd" id="5_2kpmc"]
 [ext_resource type="PackedScene" uid="uid://blu36yhrbjqun" path="res://player/player.tscn" id="5_slllj"]
 [ext_resource type="Shader" path="res://game/sky.gdshader" id="6_81wj1"]
-[ext_resource type="Shader" path="res://game/vignette.gdshader" id="8_klvux"]
-[ext_resource type="PackedScene" uid="uid://cdobloghli8j5" path="res://gui/inventory/inventory_interface/inventory_interface.tscn" id="9_1fwhy"]
+[ext_resource type="Shader" path="res://gui/hud/vignette.gdshader" id="8_23k5o"]
+[ext_resource type="PackedScene" uid="uid://cdobloghli8j5" path="res://gui/hud/inventory/inventory_interface/inventory_interface.tscn" id="9_1fwhy"]
+[ext_resource type="Texture2D" uid="uid://cb8d71ogfp27h" path="res://gui/hud/hearts.svg" id="9_pu3to"]
+[ext_resource type="Theme" uid="uid://srv3f01l10d3" path="res://gui/default_theme.tres" id="11_7q2bi"]
+[ext_resource type="Script" path="res://gui/hud/enemy_health_bar.gd" id="11_nos2s"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_g5ttc"]
 noise_type = 2
@@ -75,11 +78,97 @@ volumetric_fog_temporal_reprojection_enabled = false
 adjustment_enabled = true
 adjustment_saturation = 1.5
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fyvrv"]
-shader = ExtResource("8_klvux")
-shader_parameter/vignette_intensity = 0.4
-shader_parameter/vignette_opacity = 0.5
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rlj27"]
+shader = ExtResource("8_23k5o")
+shader_parameter/vignette_intensity = 0.23
+shader_parameter/vignette_opacity = 1.0
 shader_parameter/vignette_rgb = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_thikq"]
+bg_color = Color(0, 0, 0, 0.270588)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y0yrv"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="LabelSettings" id="LabelSettings_rvwjy"]
+font_size = 64
+shadow_size = 6
+shadow_color = Color(0, 0, 0, 0.811765)
+shadow_offset = Vector2(4, 4)
+
+[sub_resource type="Animation" id="Animation_lppkf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -158)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_esvai"]
+resource_name = "show"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.133333, 0.166667, 0.2, 0.233333, 0.266667, 0.3, 0.333333, 0.366667, 0.4, 0.433333, 0.466667, 0.5),
+"transitions": PackedFloat32Array(0.267943, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -158), Vector2(0, -112.847), Vector2(0, -75.9274), Vector2(0, -46.4833), Vector2(0, -23.7555), Vector2(0, -6.98523), Vector2(0, 4.58633), Vector2(0, 11.7181), Vector2(0, 15.1689), Vector2(0, 15.6976), Vector2(0, 14.0629), Vector2(0, 11.0239), Vector2(0, 7.3392), Vector2(0, 3.76775), Vector2(0, 1.06842), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.001),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_065i2"]
+_data = {
+"RESET": SubResource("Animation_lppkf"),
+"show": SubResource("Animation_esvai")
+}
 
 [sub_resource type="Animation" id="Animation_80xqj"]
 resource_name = "day"
@@ -243,20 +332,116 @@ environment = SubResource("Environment_5rcbq")
 [node name="Player" parent="." instance=ExtResource("5_slllj")]
 can_move = false
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="HUD" type="CanvasLayer" parent="."]
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+[node name="TextureRect" type="ColorRect" parent="HUD"]
 visible = false
-material = SubResource("ShaderMaterial_fyvrv")
+material = SubResource("ShaderMaterial_rlj27")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 color = Color(1, 1, 1, 0)
 
-[node name="InventoryInterface" parent="CanvasLayer" instance=ExtResource("9_1fwhy")]
+[node name="InventoryInterface" parent="HUD" instance=ExtResource("9_1fwhy")]
+
+[node name="PlayerStats" type="Control" parent="HUD"]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -209.0
+offset_right = 350.0
+grow_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/PlayerStats"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/PlayerStats/MarginContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/PlayerStats/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 9
+
+[node name="TextureRect" type="TextureRect" parent="HUD/PlayerStats/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("9_pu3to")
+stretch_mode = 5
+
+[node name="HealthBar" type="ProgressBar" parent="HUD/PlayerStats/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_thikq")
+theme_override_styles/fill = SubResource("StyleBoxFlat_y0yrv")
+value = 77.63
+show_percentage = false
+
+[node name="EnemyHealthBar" type="Control" parent="HUD"]
+visible = false
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -960.0
+offset_top = -158.0
+offset_right = 960.0
+offset_bottom = 20.0
+grow_horizontal = 2
+script = ExtResource("11_nos2s")
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/EnemyHealthBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 700
+theme_override_constants/margin_top = 55
+theme_override_constants/margin_right = 700
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/EnemyHealthBar/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HUD/EnemyHealthBar/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("11_7q2bi")
+text = "TREE"
+label_settings = SubResource("LabelSettings_rvwjy")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HealthBar" type="ProgressBar" parent="HUD/EnemyHealthBar/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_thikq")
+theme_override_styles/fill = SubResource("StyleBoxFlat_y0yrv")
+value = 77.63
+show_percentage = false
+
+[node name="HideTimer" type="Timer" parent="HUD/EnemyHealthBar"]
+wait_time = 5.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/EnemyHealthBar"]
+libraries = {
+"": SubResource("AnimationLibrary_065i2")
+}
+speed_scale = 2.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -271,3 +456,5 @@ fov = 128.0
 
 [node name="IndoorScenes" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -75.6673, 0)
+
+[connection signal="timeout" from="HUD/EnemyHealthBar/HideTimer" to="HUD/EnemyHealthBar" method="_on_hide_timer_timeout"]

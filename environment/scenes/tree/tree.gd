@@ -4,8 +4,6 @@ extends Node3D
 @onready var mesh: Node3D = $mesh
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var hit_sfx: AudioStreamPlayer3D = $HitSFX
-@onready var health_manager: Node3D = $HealthManager
-
 @export var loot_data : LootData
 
 func _ready() -> void:
@@ -20,7 +18,6 @@ func hit():
 func die():
 	Autoload.drop_loot(loot_data, global_position + Vector3(0,1,0))
 	emit_signal("ObjectDeleted")
-	health_manager.queue_free()
 	static_body_3d.queue_free()
 	animation_player.queue_free()
 	mesh.queue_free()

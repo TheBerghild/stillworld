@@ -113,10 +113,15 @@ ToggleInventory={
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":82,"key_label":0,"unicode":114,"echo":false,"script":null)
 ]
 }
+ToggleDebug={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":167,"key_label":0,"unicode":60,"echo":false,"script":null)
+]
+}
 
 [internationalization]
 
-locale/translations=PackedStringArray("res://localization/tips.en.translation", "res://localization/tips.tr.translation")
+locale/translations=PackedStringArray("res://localization/tips.en.translation", "res://localization/tips.tr.translation", "res://localization/messages.en.translation", "res://localization/messages.tr.translation")
 
 [layer_names]
 
@@ -125,6 +130,7 @@ locale/translations=PackedStringArray("res://localization/tips.en.translation", 
 3d_physics/layer_3="Hitboxes"
 3d_physics/layer_4="Interactables"
 3d_physics/layer_5="DroppedItems"
+3d_physics/layer_6="Messagers"
 
 [rendering]
 

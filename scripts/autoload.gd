@@ -5,6 +5,8 @@ const DROPPED_ITEM = preload("res://game/core/dropped_item/dropped_item.tscn")
 signal ShakeCamera(trauma)
 signal EnterIndoorScene(scene : PackedScene)
 signal ExitIndoor
+signal SendMessage(message : StringName)
+signal EnemyDamaged(text, health_percent)
 
 var player_pos : Vector3
 var player_inventory: InventoryData = preload("res://test_inventory.tres").duplicate()
@@ -22,6 +24,7 @@ func drop_loot(loot_data : LootData, pos : Vector3):
 	new_item.global_position = pos
 
 func _ready() -> void:
+	TranslationServer.set_locale("tr")
 	new_action.pressed = true
 	input_hold_timer = Timer.new()
 	input_hold_timer.one_shot = true

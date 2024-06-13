@@ -18,9 +18,9 @@ var gui_visible = false :
 
 var current_area : Area3D = null:
 	set(new_area):
-		if current_area:
+		if is_instance_valid(current_area):
 			current_area.ScreenStatusChanged.emit(false)
-		if new_area:
+		if is_instance_valid(new_area):
 			new_area.ScreenStatusChanged.emit(true)
 		current_area = new_area
 		if current_area == null: gui_visible = false

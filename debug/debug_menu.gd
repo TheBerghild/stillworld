@@ -26,3 +26,6 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	print_to_menu("Physics Fps", str	(1 / delta))	
 	
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ToggleDebug"):
+		visible = not visible

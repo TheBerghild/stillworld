@@ -8,6 +8,7 @@ func _on_interactable_component_interacted() -> void:
 	
 
 func _on_interactable_component_screen_status_changed(is_on_screen: bool) -> void:
+	if animation_player.current_animation == "die": return
 	animation_player.stop()
 	if is_on_screen:
 		animation_player.play("doors_open")
