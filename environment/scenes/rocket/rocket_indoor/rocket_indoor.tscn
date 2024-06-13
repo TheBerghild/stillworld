@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://1mrvu1fio0ub"]
+[gd_scene load_steps=5 format=3 uid="uid://1mrvu1fio0ub"]
 
 [ext_resource type="Script" path="res://environment/scenes/rocket/rocket_indoor/rocket_indoor.gd" id="1_3lc5g"]
 [ext_resource type="PackedScene" uid="uid://c02c0qe0tde2m" path="res://environment/scenes/rocket/rocket_indoor/walls.glb" id="1_fuqg4"]
-[ext_resource type="PackedScene" uid="uid://blu36yhrbjqun" path="res://player/player.tscn" id="3_6tes7"]
 [ext_resource type="PackedScene" uid="uid://q786gs878osv" path="res://scripts/components/interaction_manager/interactabe_component.tscn" id="4_gu2ob"]
 
 [sub_resource type="Environment" id="Environment_adeah"]
@@ -21,10 +20,6 @@ script = ExtResource("1_3lc5g")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_adeah")
-
-[node name="Player" parent="." instance=ExtResource("3_6tes7")]
-transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, 0, 0, 8.09284)
-is_indoor = true
 
 [node name="InteractableComponent" parent="." instance=ExtResource("4_gu2ob")]
 transform = Transform3D(10.2478, 0, 0, 0, 10.2478, 0, 0, 0, 10.2478, 0, 1.20466, 12.5656)

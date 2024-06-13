@@ -4,6 +4,7 @@ const DROPPED_ITEM = preload("res://game/core/dropped_item/dropped_item.tscn")
 
 signal ShakeCamera(trauma)
 signal EnterIndoorScene(scene : PackedScene)
+signal ExitIndoor
 
 var player_pos : Vector3
 var player_inventory: InventoryData = preload("res://test_inventory.tres").duplicate()

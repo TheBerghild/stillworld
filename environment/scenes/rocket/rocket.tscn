@@ -12,33 +12,6 @@ size = Vector3(5.12355, 0.144043, 2.70535)
 [sub_resource type="BoxShape3D" id="BoxShape3D_ghpn0"]
 size = Vector3(2.82, 0.144, 2.109)
 
-[sub_resource type="Animation" id="Animation_n8udg"]
-resource_name = "doors_open"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("rocket/Empty/door-right:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 1),
-"transitions": PackedFloat32Array(1, 0.105112, 1),
-"update": 0,
-"values": [Vector3(-0.01, 5.294, 0), Vector3(-0.34086, 5.29449, 0), Vector3(-0.341, 5.294, -1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("rocket/Empty/door-left:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2, 1),
-"transitions": PackedFloat32Array(1, 0.105112, 1),
-"update": 0,
-"values": [Vector3(-0.01, 5.294, 0), Vector3(-0.34086, 5.29449, 0), Vector3(-0.341, 5.294, 1)]
-}
-
 [sub_resource type="Animation" id="Animation_uhg35"]
 length = 0.001
 tracks/0/type = "value"
@@ -51,7 +24,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(-0.01, 5.294, 0)]
+"values": [Vector3(0, 5.294, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -63,7 +36,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(-0.01, 5.294, 0)]
+"values": [Vector3(0, 5.294, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_5qua3"]
@@ -79,7 +52,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.2, 0.6),
 "transitions": PackedFloat32Array(0.25854, 0.148651, 1),
 "update": 0,
-"values": [Vector3(-0.341, 5.294, -1), Vector3(-0.34086, 5.29449, 0), Vector3(-0.01, 5.294, 0)]
+"values": [Vector3(-0.341, 5.294, -1), Vector3(-0.34086, 5.29449, 0), Vector3(0, 5.294, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -91,7 +64,34 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.2, 0.6),
 "transitions": PackedFloat32Array(0.25854, 0.148651, 1),
 "update": 0,
-"values": [Vector3(-0.341, 5.294, 1), Vector3(-0.34086, 5.29449, 0), Vector3(-0.01, 5.294, 0)]
+"values": [Vector3(-0.341, 5.294, 1), Vector3(-0.34086, 5.29449, 0), Vector3(0, 5.294, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_n8udg"]
+resource_name = "doors_open"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("rocket/Empty/door-right:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 1),
+"transitions": PackedFloat32Array(1, 0.105112, 1),
+"update": 0,
+"values": [Vector3(0, 5.294, 0), Vector3(-0.34086, 5.29449, 0), Vector3(-0.341, 5.294, -1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("rocket/Empty/door-left:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 1),
+"transitions": PackedFloat32Array(1, 0.105112, 1),
+"update": 0,
+"values": [Vector3(0, 5.294, 0), Vector3(-0.34086, 5.29449, 0), Vector3(-0.341, 5.294, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1d8r7"]
@@ -386,7 +386,7 @@ libraries = {
 [node name="Empty" type="Node3D" parent="rocket"]
 
 [node name="blackpart" type="MeshInstance3D" parent="rocket/Empty"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 5.29449, 0)
+transform = Transform3D(-1.111, 0, -9.71266e-08, 0, 1.111, 0, 9.71266e-08, 0, -1.111, 0.669173, 5.29449, 0)
 material_override = SubResource("StandardMaterial3D_nui18")
 mesh = SubResource("ArrayMesh_4v5mv")
 skeleton = NodePath("")
@@ -397,12 +397,12 @@ mesh = SubResource("ArrayMesh_ruj6q")
 skeleton = NodePath("")
 
 [node name="door-left" type="MeshInstance3D" parent="rocket/Empty"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.01, 5.294, 0)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 5.294, 0)
 mesh = SubResource("ArrayMesh_j0rj8")
 skeleton = NodePath("")
 
 [node name="door-right" type="MeshInstance3D" parent="rocket/Empty"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.01, 5.294, 0)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 5.294, 0)
 mesh = SubResource("ArrayMesh_s4gyh")
 skeleton = NodePath("")
 

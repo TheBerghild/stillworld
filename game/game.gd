@@ -4,10 +4,10 @@ signal Loaded
 
 @onready var chunk_loader: Node = $StandaloneHandlers/ChunkLoader
 @onready var player: CharacterBody3D = $Player
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	SimpleGrass.set_interactive(true)
 	chunk_loader.calculate_chunks(Vector2i(0,0), 3) #TODO make 5 ceili(sensitivity/2)
 	await chunk_loader.ChunksLoaded
 	Loaded.emit()

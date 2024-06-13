@@ -5,6 +5,7 @@ extends CharacterBody3D
 @onready var attacker: Node = $Components/Attacker
 @onready var attack_cooldown: Timer = $AttackCooldown
 @onready var animation_tree: AnimationTree = $Animation/AnimationTree
+@onready var camera_pivot: Node3D = $CameraPivot
 
 @export var can_move := true
 @export var is_indoor:= false
@@ -23,3 +24,6 @@ func _process(delta: float) -> void:
 		attack_cooldown.start()
 		animation_tree.set("parameters/Attack/request", 1)
 	
+
+func sync_camera():
+	camera_pivot.global_position = global_position

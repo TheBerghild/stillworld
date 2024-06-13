@@ -17,6 +17,7 @@ shadow_size = 4
 shadow_color = Color(0, 0, 0, 0.490196)
 
 [node name="InventoryInterface" type="Control"]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = 642.0

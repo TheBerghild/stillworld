@@ -20,10 +20,8 @@ config/icon="res://icon.svg"
 
 DebugMenu="*res://debug/debug_menu.tscn"
 Autoload="*res://scripts/autoload.gd"
-SimpleGrass="*res://addons/simplegrasstextured/singleton.tscn"
 TransitionManager="*res://gui/transition_manager/transition_manager.tscn"
 GameSaver="*res://scripts/game_saver/game_saver.gd"
-InventoryInterface="*res://gui/inventory/inventory_interface/inventory_interface.tscn"
 
 [display]
 
@@ -37,10 +35,6 @@ window/stretch/aspect="expand"
 
 version_control/plugin_name="GitPlugin"
 version_control/autoload_on_startup=true
-
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/simplegrasstextured/plugin.cfg")
 
 [input]
 
@@ -134,43 +128,7 @@ locale/translations=PackedStringArray("res://localization/tips.en.translation", 
 
 [rendering]
 
+lights_and_shadows/directional_shadow/size=8192
+lights_and_shadows/positional_shadow/soft_shadow_filter_quality=3
 occlusion_culling/use_occlusion_culling=true
-
-[shader_globals]
-
-sgt_player_position={
-"type": "vec3",
-"value": Vector3(1e+06, 1e+06, 1e+06)
-}
-sgt_player_mov={
-"type": "vec3",
-"value": Vector3(0, 0, 0)
-}
-sgt_normal_displacement={
-"type": "sampler2D",
-"value": "res://addons/simplegrasstextured/images/normal.png"
-}
-sgt_motion_texture={
-"type": "sampler2D",
-"value": "res://addons/simplegrasstextured/images/motion.png"
-}
-sgt_wind_direction={
-"type": "vec3",
-"value": Vector3(1, 0, 0)
-}
-sgt_wind_movement={
-"type": "vec3",
-"value": Vector2(0, 0)
-}
-sgt_wind_strength={
-"type": "float",
-"value": 0.15
-}
-sgt_wind_turbulence={
-"type": "float",
-"value": 1.0
-}
-sgt_wind_pattern={
-"type": "sampler2D",
-"value": "res://addons/simplegrasstextured/images/wind_pattern.png"
-}
+lights_and_shadows/positional_shadow/atlas_size=8096

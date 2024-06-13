@@ -25,7 +25,6 @@ func _physics_process(delta: float) -> void:
 			Autoload.player_pos = player.global_position
 	else:
 		state = states.IDLE
-	SimpleGrass.set_player_position(player.global_position)
 
 func calculate_velocity(delta : float) -> Vector3:
 	if not Autoload.input_mode == Autoload.input_modes.GAME: 

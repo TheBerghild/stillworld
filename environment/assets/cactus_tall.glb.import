@@ -3,7 +3,7 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://cv3dsw2jkw1ym"
+uid="uid://d4m4edxwddu1i"
 path="res://.godot/imported/cactus_tall.glb-0bd967fef2e6611337cfeb1d66bb01c8.scn"
 
 [deps]
@@ -29,12 +29,6 @@ animation/fps=30
 animation/trimming=false
 animation/remove_immutable_tracks=true
 import_script/path=""
-_subresources={
-"nodes": {
-"PATH:tmpParent/cactus_tall": {
-"physics/shape_type": 1
-}
-}
-}
+_subresources={}
 gltf/naming_version=1
 gltf/embedded_image_handling=1

@@ -1,12 +1,14 @@
-[gd_scene load_steps=13 format=3 uid="uid://de5j5xqvnks0e"]
+[gd_scene load_steps=18 format=3 uid="uid://de5j5xqvnks0e"]
 
 [ext_resource type="Script" path="res://game/game.gd" id="1_4l3k5"]
 [ext_resource type="Script" path="res://game/handlers/chunk_loader.gd" id="2_q7xoy"]
 [ext_resource type="Resource" uid="uid://eu5axigs8fv6" path="res://game/chunk/fixed_chunks/rocket.tres" id="3_0gome"]
 [ext_resource type="Script" path="res://game/handlers/chunk_generator.gd" id="3_v5fjo"]
-[ext_resource type="Texture2D" uid="uid://1cjf6ki0fuk8" path="res://visuals/sunflowers_puresky_2k.hdr" id="3_vavvn"]
 [ext_resource type="Script" path="res://game/handlers/indoors_handler.gd" id="5_2kpmc"]
 [ext_resource type="PackedScene" uid="uid://blu36yhrbjqun" path="res://player/player.tscn" id="5_slllj"]
+[ext_resource type="Shader" path="res://game/sky.gdshader" id="6_81wj1"]
+[ext_resource type="Shader" path="res://game/vignette.gdshader" id="8_klvux"]
+[ext_resource type="PackedScene" uid="uid://cdobloghli8j5" path="res://gui/inventory/inventory_interface/inventory_interface.tscn" id="9_1fwhy"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_g5ttc"]
 noise_type = 2
@@ -16,32 +18,207 @@ fractal_lacunarity = 4.325
 cellular_return_type = 0
 domain_warp_amplitude = 30.15
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_rx3tm"]
-panorama = ExtResource("3_vavvn")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m1f3e"]
+shader = ExtResource("6_81wj1")
+shader_parameter/day_top_color = Color(0.625634, 0.786369, 0.86881, 1)
+shader_parameter/day_bottom_color = Color(0.627451, 0.788235, 0.870588, 1)
+shader_parameter/sunset_top_color = Color(0.7, 0.75, 1, 1)
+shader_parameter/sunset_bottom_color = Color(1, 0.5, 0.7, 1)
+shader_parameter/night_top_color = Color(0.02, 0, 0.04, 1)
+shader_parameter/night_bottom_color = Color(0.1, 0, 0.2, 1)
+shader_parameter/horizon_color = Color(1, 1, 1, 1)
+shader_parameter/horizon_blur = 1.0
+shader_parameter/sun_color = Color(10, 8, 1, 1)
+shader_parameter/sun_sunset_color = Color(10, 0, 0, 1)
+shader_parameter/sun_size = 0.2
+shader_parameter/sun_blur = 10.0
+shader_parameter/moon_color = Color(1, 0.95, 0.7, 1)
+shader_parameter/moon_size = 0.06
+shader_parameter/moon_blur = 0.1
+shader_parameter/clouds_edge_color = Color(0.8, 0.8, 0.98, 1)
+shader_parameter/clouds_top_color = Color(1, 1, 1, 1)
+shader_parameter/clouds_middle_color = Color(0.92, 0.92, 0.98, 1)
+shader_parameter/clouds_bottom_color = Color(0.83, 0.83, 0.94, 1)
+shader_parameter/clouds_speed = 2.0
+shader_parameter/clouds_direction = 0.2
+shader_parameter/clouds_scale = 1.07
+shader_parameter/clouds_cutoff = 0.3
+shader_parameter/clouds_fuzziness = 0.67
+shader_parameter/clouds_weight = 0.0
+shader_parameter/clouds_blur = 1.0
+shader_parameter/stars_speed = 1.0
+shader_parameter/overwritten_time = 0.0
 
-[sub_resource type="Sky" id="Sky_lp05v"]
-sky_material = SubResource("PanoramaSkyMaterial_rx3tm")
+[sub_resource type="Sky" id="Sky_j061e"]
+sky_material = SubResource("ShaderMaterial_m1f3e")
 
 [sub_resource type="Environment" id="Environment_5rcbq"]
 background_mode = 2
-sky = SubResource("Sky_lp05v")
-ambient_light_source = 3
-ambient_light_color = Color(1, 1, 1, 1)
-ambient_light_sky_contribution = 0.19
-ambient_light_energy = 0.2
+sky = SubResource("Sky_j061e")
 tonemap_mode = 2
-tonemap_exposure = 0.7
-tonemap_white = 16.0
-ssr_enabled = true
-ssao_intensity = 16.0
-glow_enabled = true
+tonemap_exposure = 0.6
+ssao_radius = 0.5
+ssao_power = 21.6299
+ssao_sharpness = 1.0
+sdfgi_enabled = true
+glow_normalized = true
+fog_light_color = Color(1, 1, 1, 1)
+fog_light_energy = 16.0
+fog_sun_scatter = 1.0
+fog_aerial_perspective = 1.0
+fog_sky_affect = 0.0
+volumetric_fog_enabled = true
 volumetric_fog_density = 0.0
 volumetric_fog_length = 1024.0
+volumetric_fog_sky_affect = 0.0
+volumetric_fog_temporal_reprojection_enabled = false
+adjustment_enabled = true
+adjustment_saturation = 1.5
 
-[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_ib6uk"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fyvrv"]
+shader = ExtResource("8_klvux")
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/vignette_opacity = 0.5
+shader_parameter/vignette_rgb = Color(0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_80xqj"]
+resource_name = "day"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sun:light_energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sun:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-2.1101, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("WorldEnvironment:environment:volumetric_fog_density")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("WorldEnvironment:environment:volumetric_fog_albedo")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_bc5me"]
+resource_name = "night"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Moon:light_energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.4]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sun:light_energy")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sun:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1.5708, 0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("WorldEnvironment:environment:volumetric_fog_density")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.05]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("WorldEnvironment:environment:volumetric_fog_albedo")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kpnrj"]
+_data = {
+"day": SubResource("Animation_80xqj"),
+"night": SubResource("Animation_bc5me")
+}
 
 [node name="Game" type="Node3D" groups=["WaitForLoadedOnTrans"]]
 script = ExtResource("1_4l3k5")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.513539, 0.858066, 0, -0.858066, -0.513539, 0, 0, 0)
+shadow_enabled = true
+directional_shadow_blend_splits = true
+
+[node name="Moon" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866024, -0.433016, 0.250001, 0, 0.499998, 0.866026, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+visible = false
+light_color = Color(0.570532, 0.723058, 0.990606, 1)
+light_energy = 0.4
+light_indirect_energy = 0.4
+light_volumetric_fog_energy = 0.4
+shadow_enabled = true
 
 [node name="StandaloneHandlers" type="Node" parent="."]
 
@@ -60,20 +237,37 @@ script = ExtResource("5_2kpmc")
 
 [node name="Chunks" type="Node3D" parent="."]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
-shadow_enabled = true
-directional_shadow_blend_splits = true
-directional_shadow_max_distance = 663.1
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_5rcbq")
 
 [node name="Player" parent="." instance=ExtResource("5_slllj")]
 can_move = false
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-shape = SubResource("WorldBoundaryShape3D_ib6uk")
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+visible = false
+material = SubResource("ShaderMaterial_fyvrv")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+
+[node name="InventoryInterface" parent="CanvasLayer" instance=ExtResource("9_1fwhy")]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_kpnrj")
+}
+autoplay = "day"
+playback_default_blend_time = 5.0
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 61.4617, 5.49705)
+fov = 128.0
+
+[node name="IndoorScenes" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -75.6673, 0)

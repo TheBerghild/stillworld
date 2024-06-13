@@ -1,12 +1,11 @@
 extends Node3D
 
-const ROCKET_INDOOR = "res://environment/scenes/rocket/rocket_indoor/rocket_indoor.tscn"
+var ROCKET_INDOOR = load("res://environment/scenes/rocket/rocket_indoor/rocket_indoor.tscn")
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 func _on_interactable_component_interacted() -> void:
 	Autoload.EnterIndoorScene.emit(ROCKET_INDOOR)
-
-
+	
 
 func _on_interactable_component_screen_status_changed(is_on_screen: bool) -> void:
 	animation_player.stop()

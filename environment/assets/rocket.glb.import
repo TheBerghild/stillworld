@@ -3,7 +3,7 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://b5tiwv24g07a2"
+uid="uid://bumk23kwv11kb"
 path="res://.godot/imported/rocket.glb-f3c88f461ac81f08d4f458ac4342f0c0.scn"
 
 [deps]
@@ -31,4 +31,4 @@ animation/remove_immutable_tracks=true
 import_script/path=""
 _subresources={}
 gltf/naming_version=1
-gltf/embedded_image_handling=2
+gltf/embedded_image_handling=1
