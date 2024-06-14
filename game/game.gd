@@ -15,3 +15,4 @@ func _ready() -> void:
 	player.global_position = Vector3(0,0,0)
 	Loaded.emit()
 
+

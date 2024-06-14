@@ -1,6 +1,9 @@
 extends PanelContainer
 
+class_name Slot
+
 signal SlotClicked
+
 
 @onready var texture_rect: TextureRect = $MarginContainer/TextureRect
 @onready var quantity_label: Label = $QuantityLabel

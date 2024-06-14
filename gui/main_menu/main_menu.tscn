@@ -1,7 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://bq6qkqdpji3vv"]
+[gd_scene load_steps=8 format=3 uid="uid://bq6qkqdpji3vv"]
 
 [ext_resource type="Script" path="res://gui/main_menu/main_menu.gd" id="1_7mquq"]
 [ext_resource type="Theme" uid="uid://srv3f01l10d3" path="res://gui/default_theme.tres" id="1_pj8je"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kaywn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_safjg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5wkj2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_teacy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vsis6"]
 
 [node name="MainMenu" type="Control" node_paths=PackedStringArray("start_button")]
 layout_mode = 3
@@ -12,7 +22,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_pj8je")
 script = ExtResource("1_7mquq")
-start_button = NodePath("MarginContainer/Button")
+start_button = NodePath("MarginContainer/VBoxContainer/Button")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -21,11 +31,55 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 500
+theme_override_constants/margin_top = 500
+theme_override_constants/margin_right = 500
+theme_override_constants/margin_bottom = 500
 
-[node name="Button" type="Button" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 201
-text = "START GAME"
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../Button4")
+theme_override_font_sizes/font_size = 100
+theme_override_styles/normal = SubResource("StyleBoxEmpty_kaywn")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_safjg")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_5wkj2")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_teacy")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_vsis6")
+text = "Continue"
+
+[node name="Button2" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 75
+theme_override_styles/normal = SubResource("StyleBoxEmpty_kaywn")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_safjg")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_5wkj2")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_teacy")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_vsis6")
+text = "New Game"
+
+[node name="Button3" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 75
+theme_override_styles/normal = SubResource("StyleBoxEmpty_kaywn")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_safjg")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_5wkj2")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_teacy")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_vsis6")
+text = "Options"
+
+[node name="Button4" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../Button")
+theme_override_font_sizes/font_size = 75
+theme_override_styles/normal = SubResource("StyleBoxEmpty_kaywn")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_safjg")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_5wkj2")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_teacy")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_vsis6")
+text = "Extras"
 
 [node name="ColorRect" type="ColorRect" parent="."]
 z_index = -1
@@ -38,4 +92,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
-[connection signal="pressed" from="MarginContainer/Button" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Button" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Button2" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Button3" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Button4" to="." method="_on_start_button_pressed"]

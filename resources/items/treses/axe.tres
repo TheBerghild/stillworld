@@ -1,8 +1,17 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://dukdnodaxib1x"]
+[gd_resource type="Resource" script_class="ItemData" load_steps=6 format=3 uid="uid://dukdnodaxib1x"]
 
 [ext_resource type="PackedScene" uid="uid://d0u7gy3oy7jqq" path="res://resources/items/meshes/axe.glb" id="1_gthqb"]
 [ext_resource type="Script" path="res://scripts/inventory/resource_scripts/item_data.gd" id="1_it51q"]
+[ext_resource type="Script" path="res://scripts/custom_resources/attack_data.gd" id="1_ubh3c"]
 [ext_resource type="Texture2D" uid="uid://djny3fpk708wh" path="res://resources/items/textures/axe.png" id="3_7cx55"]
+
+[sub_resource type="Resource" id="Resource_6cjw3"]
+script = ExtResource("1_ubh3c")
+base_damage = 5
+critical_multiplier = 1.2
+critical_chance = 50
+is_splash = false
+type = 1
 
 [resource]
 script = ExtResource("1_it51q")
@@ -10,3 +19,4 @@ name = &"AXE"
 texture = ExtResource("3_7cx55")
 max_stack_size = 1
 mesh = ExtResource("1_gthqb")
+attack_data = SubResource("Resource_6cjw3")

@@ -29,6 +29,10 @@ var loaded_chunks : Array[Vector2i]
 @export var fixed_chunk_datas := {}
 var chunk_datas = GameSaver.chunk_datas
 
+func _ready() -> void:
+	var player_position = Vector2(player.global_position.x,player.global_position.z)
+	player_chunk_pos = snap_vector(player_position, CHUNK_SIZE)
+	calculate_chunks(player_chunk_pos)
 func _physics_process(delta: float) -> void:
 	var player_position = Vector2(player.global_position.x,player.global_position.z)
 	player_chunk_pos = snap_vector(player_position, CHUNK_SIZE)

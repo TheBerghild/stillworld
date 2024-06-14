@@ -2,12 +2,16 @@ extends Resource
 
 class_name InventoryData
 
+signal Modified
+
 @export var slot_datas : Array[SlotData]
 
 func change_slot_at(index: int, new_slot_data : SlotData):
 	slot_datas[index] = new_slot_data
+	call_deferred("emit_signal", "Modified")
 
 func add_slot_data(slot_data_to_add : SlotData):
+	call_deferred("emit_signal", "Modified")
 	for index in slot_datas.size():
 		if slot_datas[index] == null: continue
 		if not slot_datas[index].item_data == slot_data_to_add.item_data: continue

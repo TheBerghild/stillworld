@@ -1,6 +1,6 @@
 extends Node
 
-const SEED = "ober <3 Godot"
+const SEED = "asdfsdfa"
 const TREE = preload("res://environment/scenes/tree/tree.tscn")
 const CACTUS = preload("res://environment/scenes/cactus/cactus.tscn")
 var rng = RandomNumberGenerator.new()
@@ -9,15 +9,15 @@ var scatter_objects = [TREE, CACTUS]
 
 func _ready() -> void:
 
-	#noise = FastNoiseLite.new()
-	#noise.seed = hash(SEED)
-	#noise.noise_type = FastNoiseLite.TYPE_CELLULAR
-	#noise.frequency = 1
-	#noise.fractal_type = FastNoiseLite.FRACTAL_NONE
-	#noise.cellular_distance_function = FastNoiseLite.DISTANCE_HYBRID
-	#noise.cellular_return_type = FastNoiseLite.RETURN_CELL_VALUE
-	#noise.cellular_jitter = 1
-	#noise.domain_warp_enabled = false
+	noise = FastNoiseLite.new()
+	noise.seed = hash(SEED)
+	noise.noise_type = FastNoiseLite.TYPE_CELLULAR
+	noise.frequency = 1
+	noise.fractal_type = FastNoiseLite.FRACTAL_NONE
+	noise.cellular_distance_function = FastNoiseLite.DISTANCE_EUCLIDEAN
+	noise.cellular_return_type = FastNoiseLite.RETURN_CELL_VALUE
+	noise.cellular_jitter = 0.6
+	noise.domain_warp_enabled = false
 	rng.seed = hash(SEED)
 
 func generate_chunk_data(pos : Vector2i) -> ChunkData:
@@ -26,7 +26,7 @@ func generate_chunk_data(pos : Vector2i) -> ChunkData:
 	if a < 0.3:
 		new_chunk_data.objects = scatter(0)
 		new_chunk_data.biome = 0
-	elif a < 0.5:
+	elif a < 0.6:
 		new_chunk_data.objects = scatter(1)
 		new_chunk_data.biome = 1
 	else:

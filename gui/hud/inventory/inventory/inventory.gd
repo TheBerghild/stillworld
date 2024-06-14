@@ -18,7 +18,7 @@ func populate_grid(inventory : InventoryData) -> void:
 		new_slot.inventory_reference = inventory
 		item_grid.add_child(new_slot)
 		new_slot.SlotClicked.connect(on_slot_click.bind(new_slot))
-		if focus_on_populate and index == 0:
+		if focus_on_populate and index == Autoload.player_hand_slot_index:
 			new_slot.call_deferred("focus")
 		if not slot_data: continue
 		new_slot.set_slot_data(slot_data)

@@ -1,17 +1,22 @@
-[gd_scene load_steps=27 format=3 uid="uid://de5j5xqvnks0e"]
+[gd_scene load_steps=43 format=3 uid="uid://de5j5xqvnks0e"]
 
 [ext_resource type="Script" path="res://game/game.gd" id="1_4l3k5"]
 [ext_resource type="Script" path="res://game/handlers/chunk_loader.gd" id="2_q7xoy"]
 [ext_resource type="Resource" uid="uid://eu5axigs8fv6" path="res://game/chunk/fixed_chunks/rocket.tres" id="3_0gome"]
 [ext_resource type="Script" path="res://game/handlers/chunk_generator.gd" id="3_v5fjo"]
+[ext_resource type="Script" path="res://gui/hud/inventory/hotbar/hotbar.gd" id="4_y28lq"]
 [ext_resource type="Script" path="res://game/handlers/indoors_handler.gd" id="5_2kpmc"]
+[ext_resource type="Script" path="res://gui/hud/player_stats.gd" id="5_m07n7"]
 [ext_resource type="PackedScene" uid="uid://blu36yhrbjqun" path="res://player/player.tscn" id="5_slllj"]
 [ext_resource type="Shader" path="res://game/sky.gdshader" id="6_81wj1"]
 [ext_resource type="Shader" path="res://gui/hud/vignette.gdshader" id="8_23k5o"]
 [ext_resource type="PackedScene" uid="uid://cdobloghli8j5" path="res://gui/hud/inventory/inventory_interface/inventory_interface.tscn" id="9_1fwhy"]
 [ext_resource type="Texture2D" uid="uid://cb8d71ogfp27h" path="res://gui/hud/hearts.svg" id="9_pu3to"]
 [ext_resource type="Theme" uid="uid://srv3f01l10d3" path="res://gui/default_theme.tres" id="11_7q2bi"]
+[ext_resource type="PackedScene" uid="uid://cgctf5125ujbl" path="res://environment/scenes/rocket/rocket.tscn" id="11_ar653"]
 [ext_resource type="Script" path="res://gui/hud/enemy_health_bar.gd" id="11_nos2s"]
+[ext_resource type="Script" path="res://game/grids/grid_data.gd" id="12_qw0pi"]
+[ext_resource type="Script" path="res://game/chunk/chunk_data.gd" id="13_mo7e2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m1f3e"]
 shader = ExtResource("6_81wj1")
@@ -72,19 +77,34 @@ adjustment_saturation = 1.5
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rlj27"]
 shader = ExtResource("8_23k5o")
-shader_parameter/vignette_intensity = 0.23
-shader_parameter/vignette_opacity = 1.0
-shader_parameter/vignette_rgb = Color(0, 0, 0, 1)
+shader_parameter/vignette_intensity = 0.105
+shader_parameter/vignette_opacity = 0.0
+shader_parameter/vignette_rgb = Color(100, 0, 0, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_thikq"]
-bg_color = Color(0, 0, 0, 0.270588)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ugl81"]
+bg_color = Color(0, 0, 0, 0.329412)
+border_color = Color(0.8, 0.8, 0.8, 0)
 corner_radius_top_left = 3
 corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pvs8u"]
+bg_color = Color(0.856946, 0.647205, 7.70092e-07, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_stqy4"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y0yrv"]
-bg_color = Color(1, 1, 1, 1)
+bg_color = Color(1, 0.24524, 0.187846, 1)
 border_width_left = 3
 border_width_top = 3
 border_width_right = 3
@@ -100,6 +120,22 @@ font_size = 64
 shadow_size = 6
 shadow_color = Color(0, 0, 0, 0.811765)
 shadow_offset = Vector2(4, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1jdjh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5u2pc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dkq0q"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
 
 [sub_resource type="Animation" id="Animation_lppkf"]
 length = 0.001
@@ -160,6 +196,43 @@ tracks/1/keys = {
 _data = {
 "RESET": SubResource("Animation_lppkf"),
 "show": SubResource("Animation_esvai")
+}
+
+[sub_resource type="Animation" id="Animation_hic04"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:material:shader_parameter/vignette_opacity")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_v08b8"]
+resource_name = "player_hurt"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:material:shader_parameter/vignette_opacity")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(0.258816, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wli0l"]
+_data = {
+"RESET": SubResource("Animation_hic04"),
+"player_hurt": SubResource("Animation_v08b8")
 }
 
 [sub_resource type="Animation" id="Animation_80xqj"]
@@ -284,6 +357,21 @@ _data = {
 "night": SubResource("Animation_bc5me")
 }
 
+[sub_resource type="Resource" id="Resource_r6pip"]
+script = ExtResource("12_qw0pi")
+scene = ExtResource("11_ar653")
+position = Vector2(5, 5)
+
+[sub_resource type="Resource" id="Resource_xmyiw"]
+script = ExtResource("12_qw0pi")
+scene = ExtResource("11_ar653")
+position = Vector2(5, -5)
+
+[sub_resource type="Resource" id="Resource_umykv"]
+script = ExtResource("13_mo7e2")
+biome = 1
+objects = Array[ExtResource("12_qw0pi")]([SubResource("Resource_r6pip"), SubResource("Resource_xmyiw")])
+
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_g5ttc"]
 noise_type = 2
 frequency = 1.0
@@ -314,22 +402,44 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_5rcbq")
 
-[node name="Player" parent="." instance=ExtResource("5_slllj")]
-can_move = false
-
 [node name="HUD" type="CanvasLayer" parent="."]
 
 [node name="TextureRect" type="ColorRect" parent="HUD"]
-visible = false
 material = SubResource("ShaderMaterial_rlj27")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(1, 1, 1, 0)
 
+[node name="Hotbar" type="Control" parent="HUD"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Hotbar" type="PanelContainer" parent="HUD/Hotbar"]
+layout_mode = 0
+offset_right = 22.0
+offset_bottom = 22.0
+script = ExtResource("4_y28lq")
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/Hotbar/Hotbar"]
+layout_mode = 2
+theme_override_constants/margin_left = 11
+theme_override_constants/margin_top = 11
+theme_override_constants/margin_right = 11
+theme_override_constants/margin_bottom = 11
+
+[node name="HBoxCon" type="HBoxContainer" parent="HUD/Hotbar/Hotbar/MarginContainer"]
+layout_mode = 2
+
+[node name="Timer" type="Timer" parent="HUD/Hotbar/Hotbar"]
+
 [node name="InventoryInterface" parent="HUD" instance=ExtResource("9_1fwhy")]
+visible = false
 
 [node name="PlayerStats" type="Control" parent="HUD"]
 layout_mode = 3
@@ -339,6 +449,7 @@ anchor_bottom = 1.0
 offset_top = -209.0
 offset_right = 350.0
 grow_vertical = 0
+script = ExtResource("5_m07n7")
 
 [node name="MarginContainer" type="MarginContainer" parent="HUD/PlayerStats"]
 layout_mode = 1
@@ -359,18 +470,31 @@ layout_mode = 2
 theme_override_constants/separation = 9
 
 [node name="TextureRect" type="TextureRect" parent="HUD/PlayerStats/MarginContainer/VBoxContainer/HBoxContainer"]
+modulate = Color(1, 0.247059, 0.188235, 1)
 layout_mode = 2
 texture = ExtResource("9_pu3to")
 stretch_mode = 5
 
-[node name="HealthBar" type="ProgressBar" parent="HUD/PlayerStats/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="JuiceBar" type="ProgressBar" parent="HUD/PlayerStats/MarginContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(0, 15)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-theme_override_styles/background = SubResource("StyleBoxFlat_thikq")
+theme_override_styles/background = SubResource("StyleBoxFlat_ugl81")
+theme_override_styles/fill = SubResource("StyleBoxFlat_pvs8u")
+value = 100.0
+show_percentage = false
+
+[node name="HealthBar" type="ProgressBar" parent="HUD/PlayerStats/MarginContainer/VBoxContainer/HBoxContainer/JuiceBar"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+offset_right = 296.0
+offset_bottom = 20.0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxEmpty_stqy4")
 theme_override_styles/fill = SubResource("StyleBoxFlat_y0yrv")
-value = 77.63
+value = 100.0
 show_percentage = false
 
 [node name="EnemyHealthBar" type="Control" parent="HUD"]
@@ -379,9 +503,8 @@ layout_mode = 3
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -960.0
 offset_top = -158.0
-offset_right = 960.0
+offset_right = 1920.0
 offset_bottom = 20.0
 grow_horizontal = 2
 script = ExtResource("11_nos2s")
@@ -409,14 +532,26 @@ label_settings = SubResource("LabelSettings_rvwjy")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HealthBar" type="ProgressBar" parent="HUD/EnemyHealthBar/MarginContainer/VBoxContainer"]
+[node name="JuiceBar" type="ProgressBar" parent="HUD/EnemyHealthBar/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 15)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-theme_override_styles/background = SubResource("StyleBoxFlat_thikq")
+theme_override_styles/background = SubResource("StyleBoxFlat_1jdjh")
 theme_override_styles/fill = SubResource("StyleBoxFlat_y0yrv")
-value = 77.63
+value = 100.0
+show_percentage = false
+
+[node name="MainHealthBar" type="ProgressBar" parent="HUD/EnemyHealthBar/MarginContainer/VBoxContainer/JuiceBar"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 0
+offset_right = 520.0
+offset_bottom = 15.0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxEmpty_5u2pc")
+theme_override_styles/fill = SubResource("StyleBoxFlat_dkq0q")
+value = 53.31
 show_percentage = false
 
 [node name="HideTimer" type="Timer" parent="HUD/EnemyHealthBar"]
@@ -428,6 +563,11 @@ libraries = {
 }
 speed_scale = 2.0
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD"]
+libraries = {
+"": SubResource("AnimationLibrary_wli0l")
+}
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_kpnrj")
@@ -435,19 +575,23 @@ libraries = {
 autoplay = "day"
 playback_default_blend_time = 5.0
 
+[node name="IndoorScenes" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -75.6673, 0)
+
+[node name="Player" parent="." instance=ExtResource("5_slllj")]
+can_move = false
+
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 61.4617, 5.49705)
 fov = 128.0
-
-[node name="IndoorScenes" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -75.6673, 0)
 
 [node name="StandaloneHandlers" type="Node" parent="."]
 
 [node name="ChunkLoader" type="Node" parent="StandaloneHandlers"]
 script = ExtResource("2_q7xoy")
 fixed_chunk_datas = {
-Vector2i(1, 0): ExtResource("3_0gome")
+Vector2i(1, 0): ExtResource("3_0gome"),
+Vector2i(5, -4): SubResource("Resource_umykv")
 }
 
 [node name="ChunkGenerator" type="Node" parent="StandaloneHandlers"]
@@ -457,4 +601,5 @@ noise = SubResource("FastNoiseLite_g5ttc")
 [node name="IndoorsHandler" type="Node" parent="StandaloneHandlers"]
 script = ExtResource("5_2kpmc")
 
+[connection signal="visibility_changed" from="HUD/Hotbar/Hotbar" to="HUD/Hotbar/Hotbar" method="_on_visibility_changed"]
 [connection signal="timeout" from="HUD/EnemyHealthBar/HideTimer" to="HUD/EnemyHealthBar" method="_on_hide_timer_timeout"]

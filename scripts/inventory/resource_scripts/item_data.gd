@@ -6,3 +6,4 @@ class_name ItemData
 @export var texture : Texture
 @export var max_stack_size : int = 128
 @export var mesh : PackedScene
+@export var attack_data : AttackData

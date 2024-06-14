@@ -16,8 +16,7 @@ var speed : float = 200
 var sensitivity : int = 5
 
 func _physics_process(delta: float) -> void:
-	if not player.is_on_floor():
-		player.global_position.y -= 9.8 * delta
+	player.velocity.y += -35 * delta
 	if player.can_move:
 		player.velocity = calculate_velocity(delta)
 		player.move_and_slide()

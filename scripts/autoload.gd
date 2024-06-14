@@ -6,9 +6,13 @@ signal ShakeCamera(trauma)
 signal EnterIndoorScene(scene : PackedScene)
 signal ExitIndoor
 signal SendMessage(message : StringName)
-signal EnemyDamaged(text, health_percent)
+signal EnemyDamaged
+signal ExitedEnemyRadius
+signal PlayerHealthChanged
+signal PlayerHandUpdated
 
 var player_pos : Vector3
+var player_health : int = 100 : set = set_player_health
 var player_inventory: InventoryData = preload("res://test_inventory.tres").duplicate()
 var is_joy_mode = false
 var input_mode : input_modes = input_modes.GAME
@@ -16,7 +20,19 @@ enum input_modes {INVENTORY,GAME}
 var input_hold_timer = Timer.new()
 
 var new_action = InputEventAction.new()
+var player_hand_slot_index : int = 0 :
+	set(new):
+		player_hand_slot_index = posmod(new, 6)
+		PlayerHandUpdated.emit()
+		DebugMenu.print_to_menu("player_hand_slot_index", str(player_hand_slot_index))
 
+func set_player_health(new_health):
+	if player_health < 1:
+		GameSaver.save_game()
+		TransitionManager.transition_to_file("res://gui/main_menu/main_menu.tscn")
+	player_health = new_health
+	PlayerHealthChanged.emit(new_health)
+	DebugMenu.print_to_menu("Player Health",str(new_health))
 func drop_loot(loot_data : LootData, pos : Vector3):
 	var new_item = DROPPED_ITEM.instantiate()
 	new_item.slot_data = loot_data.get_loot_as_slot()
@@ -24,7 +40,7 @@ func drop_loot(loot_data : LootData, pos : Vector3):
 	new_item.global_position = pos
 
 func _ready() -> void:
-	TranslationServer.set_locale("tr")
+	#TranslationServer.set_locale("tr")
 	new_action.pressed = true
 	input_hold_timer = Timer.new()
 	input_hold_timer.one_shot = true
