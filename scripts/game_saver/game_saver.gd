@@ -22,10 +22,10 @@ func save_save_data():
 
 func load_game():
 	if not DirAccess.dir_exists_absolute(save_path): return
-	var loaded_inv_data = ResourceLoader.load(save_path + "/player_inv.tres")
+	var loaded_inv_data = load(save_path + "/player_inv.tres")
 	if loaded_inv_data: Autoload.player_inventory = loaded_inv_data
 	else: Autoload.player_inventory = load("res://test_inventory.tres")
-	var loaded_world_data = ResourceLoader.load(save_path + "/world.tres")
+	var loaded_world_data = load(save_path + "/world.tres")
 	if loaded_world_data:
 		chunk_datas = loaded_world_data.chunk_datas
 	var config = ConfigFile.new()

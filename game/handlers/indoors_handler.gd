@@ -6,27 +6,14 @@ extends Node
 @onready var game: Node3D = $"../.."
 @onready var indoor_scenes: Node3D = $"../../IndoorScenes"
 
-var last_player_pos : Vector3
-
 func _ready() -> void:
-	Autoload.TeleportIndoor.connect(teleport_indoor)
-	Autoload.TeleportOutdoor.connect(teleport_outdoor)
+	Autoload.Teleport.connect(teleport)
 
-func teleport_indoor(pos : Vector3):
-	last_player_pos = player.global_position
+func teleport(pos : Vector3):
 	TransitionManager.close()
+	player.set_physics_process(false)
 	await TransitionManager.Finished
 	player.global_position = pos
-	chunks.hide()
 	player.sync_camera()
-	chunk_loader.updating = false
 	TransitionManager.open()
-	
-func teleport_outdoor(pos : Vector3):
-	TransitionManager.close()
-	await TransitionManager.Finished
-	player.global_position = last_player_pos
-	chunks.show()
-	player.sync_camera()
-	chunk_loader.updating = true
-	TransitionManager.open()
+	player.set_physics_process(true)

@@ -6,6 +6,7 @@ const CACTUS = preload("res://environment/scenes/cactus/cactus.tscn")
 var rng = RandomNumberGenerator.new()
 @export var noise : FastNoiseLite
 var scatter_objects = [TREE, CACTUS]
+const ENEMY = preload("res://entities/enemy/enemy.tscn")
 
 func _ready() -> void:
 	
@@ -25,7 +26,7 @@ func generate_chunk_data(pos : Vector2i) -> ChunkData:
 	var a = noise.get_noise_2d(pos.x*0.2,pos.y*0.2)
 	if a < 0.3:
 		new_chunk_data.objects = scatter(0)
-		new_chunk_data.biome = 0
+		new_chunk_data.objects.append_array(populate())
 	elif a < 0.6:
 		new_chunk_data.objects = scatter(1)
 		new_chunk_data.biome = 1
@@ -34,7 +35,7 @@ func generate_chunk_data(pos : Vector2i) -> ChunkData:
 
 	return new_chunk_data
 
-func scatter(type : int):
+func scatter(type : int) -> Array[ChunkObject]:
 	var objects : Array[ChunkObject]
 	for i in rng.randi_range(0, 1):
 		var tree = ChunkObject.new()
@@ -42,4 +43,14 @@ func scatter(type : int):
 		tree.position.x = rng.randf_range(8.7,-8.7)
 		tree.position.y = rng.randf_range(8.7,-8.7)
 		objects.append(tree)
+	return objects
+
+func populate() -> Array[ChunkObject]:
+	var objects : Array[ChunkObject]
+	for i in rng.randi_range(0, 1):
+		var enemy = ChunkObject.new()
+		enemy.scene = ENEMY
+		enemy.position.x = rng.randf_range(8.7,-8.7)
+		enemy.position.y = rng.randf_range(8.7,-8.7)
+		objects.append(enemy)
 	return objects

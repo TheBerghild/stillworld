@@ -3,8 +3,7 @@ extends Node
 const DROPPED_ITEM = preload("res://game/core/dropped_item/dropped_item.tscn")
 
 signal ShakeCamera(trauma)
-signal TeleportIndoor
-signal TeleportOutdoor
+signal Teleport
 signal SendMessage(message : StringName)
 signal EnemyDamaged
 signal ExitedEnemyRadius

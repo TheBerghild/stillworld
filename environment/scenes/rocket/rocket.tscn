@@ -1,8 +1,8 @@
-[gd_scene load_steps=30 format=3 uid="uid://cgctf5125ujbl"]
+[gd_scene load_steps=32 format=3 uid="uid://cgctf5125ujbl"]
 
 [ext_resource type="Script" path="res://environment/scenes/rocket/rocket.gd" id="1_ks1jm"]
 [ext_resource type="PackedScene" uid="uid://q786gs878osv" path="res://scripts/components/interactable_component/interactabe_component.tscn" id="3_2too1"]
-[ext_resource type="PackedScene" uid="uid://1mrvu1fio0ub" path="res://environment/scenes/rocket/rocket_indoor/rocket_indoor.tscn" id="3_hg6nj"]
+[ext_resource type="PackedScene" uid="uid://dlyivw0ce7ya7" path="res://environment/scenes/rocket/walls.glb" id="3_ar0yg"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ys4nw"]
 size = Vector3(5.12355, 0.144043, 2.70535)
@@ -371,6 +371,14 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_w8i13")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_srh6e"]
+cull_mode = 1
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6s52t"]
+material = SubResource("StandardMaterial3D_srh6e")
+
 [node name="Rocket" type="Node3D"]
 script = ExtResource("1_ks1jm")
 
@@ -397,7 +405,7 @@ shape = SubResource("BoxShape3D_ghpn0")
 transform = Transform3D(-1, -8.74228e-08, -3.82138e-15, 0, -4.37114e-08, 1, -8.74228e-08, 1, 4.37114e-08, 6.83772, 3.94348, -1.05202)
 shape = SubResource("BoxShape3D_ghpn0")
 
-[node name="InteractableComponent" parent="." instance=ExtResource("3_2too1")]
+[node name="EnterInteractableComponent" parent="." instance=ExtResource("3_2too1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.28303, 4.00349, 0)
 text = "Enter Spaceship"
 
@@ -417,6 +425,11 @@ mesh = SubResource("ArrayMesh_4v5mv")
 skeleton = NodePath("")
 
 [node name="body_001" type="MeshInstance3D" parent="rocket/Empty"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 5.29449, 0)
+mesh = SubResource("ArrayMesh_ruj6q")
+skeleton = NodePath("")
+
+[node name="body_002" type="MeshInstance3D" parent="rocket/Empty"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 5.29449, 0)
 mesh = SubResource("ArrayMesh_ruj6q")
 skeleton = NodePath("")
@@ -451,8 +464,24 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -4.380
 mesh = SubResource("ArrayMesh_q3rup")
 skeleton = NodePath("")
 
-[node name="RocketIndoor" parent="." instance=ExtResource("3_hg6nj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -66.3538, 0)
+[node name="tppointoutdoor" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.35188, 3.79533, -0.0571053)
 
-[connection signal="Interacted" from="InteractableComponent" to="." method="_on_interactable_component_interacted"]
-[connection signal="ScreenStatusChanged" from="InteractableComponent" to="." method="_on_interactable_component_screen_status_changed"]
+[node name="walls" parent="." instance=ExtResource("3_ar0yg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 500, 0)
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="walls"]
+transform = Transform3D(69.2458, 0, 0, 0, 69.2458, 0, 0, 0, 69.2458, 0, 0, 0)
+mesh = SubResource("BoxMesh_6s52t")
+
+[node name="tppointindoor" type="Marker3D" parent="walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.758972, 8.90515)
+
+[node name="ExitInteractableComponent" parent="walls" instance=ExtResource("3_2too1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 12.0284)
+text = "Enter Spaceship"
+
+[connection signal="Interacted" from="EnterInteractableComponent" to="." method="_on_enter_interactable_component_interacted"]
+[connection signal="ScreenStatusChanged" from="EnterInteractableComponent" to="." method="_on_interactable_component_screen_status_changed"]
+[connection signal="Interacted" from="walls/ExitInteractableComponent" to="." method="_on_exit_interactable_component_interacted"]

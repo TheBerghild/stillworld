@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://de5j5xqvnks0e"]
+[gd_scene load_steps=37 format=3 uid="uid://de5j5xqvnks0e"]
 
 [ext_resource type="Script" path="res://game/game.gd" id="1_4l3k5"]
 [ext_resource type="Script" path="res://game/handlers/chunk_loader.gd" id="2_q7xoy"]
@@ -13,10 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://cdobloghli8j5" path="res://gui/hud/inventory/inventory_interface/inventory_interface.tscn" id="9_1fwhy"]
 [ext_resource type="Texture2D" uid="uid://cb8d71ogfp27h" path="res://gui/hud/hearts.svg" id="9_pu3to"]
 [ext_resource type="Theme" uid="uid://srv3f01l10d3" path="res://gui/default_theme.tres" id="11_7q2bi"]
-[ext_resource type="PackedScene" uid="uid://cgctf5125ujbl" path="res://environment/scenes/rocket/rocket.tscn" id="11_ar653"]
 [ext_resource type="Script" path="res://gui/hud/enemy_health_bar.gd" id="11_nos2s"]
-[ext_resource type="Script" path="res://game/grids/grid_data.gd" id="12_qw0pi"]
-[ext_resource type="Script" path="res://game/chunk/chunk_data.gd" id="13_mo7e2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m1f3e"]
 shader = ExtResource("6_81wj1")
@@ -357,21 +354,6 @@ _data = {
 "night": SubResource("Animation_bc5me")
 }
 
-[sub_resource type="Resource" id="Resource_r6pip"]
-script = ExtResource("12_qw0pi")
-scene = ExtResource("11_ar653")
-position = Vector2(5, 5)
-
-[sub_resource type="Resource" id="Resource_xmyiw"]
-script = ExtResource("12_qw0pi")
-scene = ExtResource("11_ar653")
-position = Vector2(5, -5)
-
-[sub_resource type="Resource" id="Resource_umykv"]
-script = ExtResource("13_mo7e2")
-biome = 1
-objects = Array[ExtResource("12_qw0pi")]([SubResource("Resource_r6pip"), SubResource("Resource_xmyiw")])
-
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_g5ttc"]
 noise_type = 2
 frequency = 1.0
@@ -591,8 +573,7 @@ fov = 128.0
 [node name="ChunkLoader" type="Node" parent="StandaloneHandlers"]
 script = ExtResource("2_q7xoy")
 fixed_chunk_datas = {
-Vector2i(1, 0): ExtResource("3_0gome"),
-Vector2i(5, -4): SubResource("Resource_umykv")
+Vector2i(1, 0): ExtResource("3_0gome")
 }
 
 [node name="ChunkGenerator" type="Node" parent="StandaloneHandlers"]

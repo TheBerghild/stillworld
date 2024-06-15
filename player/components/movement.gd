@@ -22,6 +22,7 @@ func _physics_process(delta: float) -> void:
 		player.move_and_slide()
 		Autoload.player_pos = player.global_position
 	else:
+		player.velocity = Vector3.ZERO
 		state = states.IDLE
 
 func calculate_velocity(delta : float) -> Vector3:
