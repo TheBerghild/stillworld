@@ -1,7 +1,8 @@
-[gd_scene load_steps=29 format=3 uid="uid://cgctf5125ujbl"]
+[gd_scene load_steps=30 format=3 uid="uid://cgctf5125ujbl"]
 
 [ext_resource type="Script" path="res://environment/scenes/rocket/rocket.gd" id="1_ks1jm"]
 [ext_resource type="PackedScene" uid="uid://q786gs878osv" path="res://scripts/components/interactable_component/interactabe_component.tscn" id="3_2too1"]
+[ext_resource type="PackedScene" uid="uid://1mrvu1fio0ub" path="res://environment/scenes/rocket/rocket_indoor/rocket_indoor.tscn" id="3_hg6nj"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ys4nw"]
 size = Vector3(5.12355, 0.144043, 2.70535)
@@ -449,6 +450,9 @@ skeleton = NodePath("")
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -4.38052, 2.39381, 0)
 mesh = SubResource("ArrayMesh_q3rup")
 skeleton = NodePath("")
+
+[node name="RocketIndoor" parent="." instance=ExtResource("3_hg6nj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -66.3538, 0)
 
 [connection signal="Interacted" from="InteractableComponent" to="." method="_on_interactable_component_interacted"]
 [connection signal="ScreenStatusChanged" from="InteractableComponent" to="." method="_on_interactable_component_screen_status_changed"]

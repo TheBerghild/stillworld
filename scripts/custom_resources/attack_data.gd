@@ -8,7 +8,7 @@ class_name AttackData
 @export var is_splash : bool
 @export var type : weapon_types
 
-enum weapon_types {Sword,Axe,Pickaxe,Ranged}
+enum weapon_types {None,Sword,Axe,Pickaxe,Ranged}
 
 func calculate_damage() -> int:
 	if randi_range(0, 100) <= critical_chance:

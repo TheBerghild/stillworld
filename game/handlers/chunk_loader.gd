@@ -31,11 +31,11 @@ var chunk_datas = GameSaver.chunk_datas
 
 func _ready() -> void:
 	var player_position = Vector2(player.global_position.x,player.global_position.z)
-	player_chunk_pos = snap_vector(player_position, CHUNK_SIZE)
+	player_chunk_pos = snap_vector(player_position)
 	calculate_chunks(player_chunk_pos)
 func _physics_process(delta: float) -> void:
 	var player_position = Vector2(player.global_position.x,player.global_position.z)
-	player_chunk_pos = snap_vector(player_position, CHUNK_SIZE)
+	player_chunk_pos = snap_vector(player_position)
 	DebugMenu.print_to_menu("Player Chunk", "%s , %s" %[player_chunk_pos.x, player_chunk_pos.y])
 	DebugMenu.print_to_menu("Player Position", "%.3f , %.3f" %[player_position.x, player_position.y])
 
@@ -86,10 +86,10 @@ func get_surrounding_chunks(current_tile, crd) -> Array[Vector2i]:
 			surrounding_tiles.append(target_tile)
 	return surrounding_tiles
 
-func snap_vector(pos : Vector2, size : int) -> Vector2i:
+func snap_vector(pos : Vector2) -> Vector2i:
 	var new_vector : Vector2i
-	new_vector.x = floor((pos.x + size/2) / size)
-	new_vector.y = floor((pos.y + size/2) / size)
+	new_vector.x = floor((pos.x + CHUNK_SIZE/2) / CHUNK_SIZE)
+	new_vector.y = floor((pos.y + CHUNK_SIZE/2) / CHUNK_SIZE)
 	return new_vector
 	
 func subtract_array(a: Array, b: Array) -> Array:

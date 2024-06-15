@@ -1,6 +1,6 @@
 extends Node
 
-const SEED = "asdfsdfa"
+var seed = GameSaver.save_data["seed"]
 const TREE = preload("res://environment/scenes/tree/tree.tscn")
 const CACTUS = preload("res://environment/scenes/cactus/cactus.tscn")
 var rng = RandomNumberGenerator.new()
@@ -8,9 +8,9 @@ var rng = RandomNumberGenerator.new()
 var scatter_objects = [TREE, CACTUS]
 
 func _ready() -> void:
-
+	
 	noise = FastNoiseLite.new()
-	noise.seed = hash(SEED)
+	noise.seed = hash(seed)
 	noise.noise_type = FastNoiseLite.TYPE_CELLULAR
 	noise.frequency = 1
 	noise.fractal_type = FastNoiseLite.FRACTAL_NONE
@@ -18,7 +18,7 @@ func _ready() -> void:
 	noise.cellular_return_type = FastNoiseLite.RETURN_CELL_VALUE
 	noise.cellular_jitter = 0.6
 	noise.domain_warp_enabled = false
-	rng.seed = hash(SEED)
+	rng.seed = hash(seed)
 
 func generate_chunk_data(pos : Vector2i) -> ChunkData:
 	var new_chunk_data := ChunkData.new()

@@ -7,6 +7,7 @@ var slot_data : SlotData
 @onready var button: Button = $Button
 
 func _ready() -> void:
+	refresh()
 	Autoload.PlayerHandUpdated.connect(refresh)
 
 func _on_button_button_down() -> void:

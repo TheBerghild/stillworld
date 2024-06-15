@@ -1,0 +1,223 @@
+[gd_scene load_steps=14 format=3 uid="uid://cc6qexfdsnlly"]
+
+[ext_resource type="Theme" uid="uid://jwg2ofcsce70" path="res://gui/default_theme.tres" id="1_2jkdy"]
+[ext_resource type="Shader" path="res://gui/blur.gdshader" id="2_j5qyt"]
+[ext_resource type="Script" path="res://gui/options/options.gd" id="2_snl3k"]
+[ext_resource type="Texture2D" uid="uid://bdp8iwxr6qd0d" path="res://gui/options/arrow.svg" id="4_b671t"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sudo2"]
+shader = ExtResource("2_j5qyt")
+shader_parameter/lod = 0.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iqxyc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vv4ou"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m6bwh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_56xu3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nh0yb"]
+
+[sub_resource type="Animation" id="Animation_yr4mf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/lod")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_1dvr5"]
+resource_name = "enter"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/lod")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [0.0, 2.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xspdh"]
+_data = {
+"RESET": SubResource("Animation_yr4mf"),
+"enter": SubResource("Animation_1dvr5")
+}
+
+[node name="Options" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_2jkdy")
+script = ExtResource("2_snl3k")
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="."]
+z_index = -2
+copy_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -1
+material = SubResource("ShaderMaterial_sudo2")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+color = Color(0, 0, 0, 0.278431)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 75
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 75
+theme_override_constants/margin_bottom = 25
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Button" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../Button5")
+focus_neighbor_bottom = NodePath("../Button2")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxEmpty_iqxyc")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_vv4ou")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_m6bwh")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_56xu3")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_nh0yb")
+text = "Controls"
+alignment = 0
+
+[node name="Button2" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../Button")
+focus_neighbor_bottom = NodePath("../Button3")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxEmpty_iqxyc")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_vv4ou")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_m6bwh")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_56xu3")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_nh0yb")
+text = "Key Mapping"
+alignment = 0
+
+[node name="Button3" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../Button2")
+focus_neighbor_bottom = NodePath("../Button4")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxEmpty_iqxyc")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_vv4ou")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_m6bwh")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_56xu3")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_nh0yb")
+text = "Graphics"
+alignment = 0
+
+[node name="Button4" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../Button3")
+focus_neighbor_bottom = NodePath("../Button5")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxEmpty_iqxyc")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_vv4ou")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_m6bwh")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_56xu3")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_nh0yb")
+text = "Audio"
+alignment = 0
+
+[node name="Button5" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../Button4")
+focus_neighbor_bottom = NodePath("../Button")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxEmpty_iqxyc")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_vv4ou")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_m6bwh")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_56xu3")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_nh0yb")
+text = "Multiplayer"
+alignment = 0
+
+[node name="TabContainer" type="TabContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+tab_alignment = 1
+tabs_visible = false
+tab_focus_mode = 0
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/TabContainer"]
+layout_mode = 2
+text = "Controls"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="MarginContainer/HBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+text = "KeyMapping"
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="MarginContainer/HBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+text = "Graphics"
+horizontal_alignment = 1
+
+[node name="Label4" type="Label" parent="MarginContainer/HBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+text = "Audio"
+horizontal_alignment = 1
+
+[node name="Label5" type="Label" parent="MarginContainer/HBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+text = "Multiplayer"
+horizontal_alignment = 1
+
+[node name="Indicator" type="Sprite2D" parent="."]
+position = Vector2(59, 241)
+scale = Vector2(0.06, 0.06)
+texture = ExtResource("4_b671t")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../ColorRect")
+libraries = {
+"": SubResource("AnimationLibrary_xspdh")
+}

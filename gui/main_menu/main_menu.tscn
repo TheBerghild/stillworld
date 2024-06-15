@@ -1,17 +1,20 @@
-[gd_scene load_steps=8 format=3 uid="uid://bq6qkqdpji3vv"]
+[gd_scene load_steps=10 format=3 uid="uid://bq6qkqdpji3vv"]
 
 [ext_resource type="Script" path="res://gui/main_menu/main_menu.gd" id="1_7mquq"]
 [ext_resource type="Theme" uid="uid://srv3f01l10d3" path="res://gui/default_theme.tres" id="1_pj8je"]
+[ext_resource type="Texture2D" uid="uid://bdp8iwxr6qd0d" path="res://gui/options/arrow.svg" id="3_kevx6"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kaywn"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_safjg"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6gb7t"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5wkj2"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_teacy"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vsis6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_safjg"]
 
 [node name="MainMenu" type="Control" node_paths=PackedStringArray("start_button")]
 layout_mode = 3
@@ -38,30 +41,25 @@ theme_override_constants/margin_bottom = 500
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 7
 
 [node name="Button" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-focus_neighbor_top = NodePath("../Button4")
-theme_override_font_sizes/font_size = 100
-theme_override_styles/normal = SubResource("StyleBoxEmpty_kaywn")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_safjg")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_5wkj2")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_teacy")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_vsis6")
-text = "Continue"
-
-[node name="Button2" type="Button" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
+focus_neighbor_bottom = NodePath("../Button3")
+theme_override_colors/font_focus_color = Color(0.72549, 1, 1, 1)
 theme_override_font_sizes/font_size = 75
 theme_override_styles/normal = SubResource("StyleBoxEmpty_kaywn")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_safjg")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_6gb7t")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_5wkj2")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_teacy")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_vsis6")
-text = "New Game"
+text = "Play"
 
 [node name="Button3" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+focus_neighbor_top = NodePath("../Button")
+focus_neighbor_bottom = NodePath("../Button5")
+theme_override_colors/font_focus_color = Color(0.72549, 1, 1, 1)
 theme_override_font_sizes/font_size = 75
 theme_override_styles/normal = SubResource("StyleBoxEmpty_kaywn")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_safjg")
@@ -70,9 +68,23 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_teacy")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_vsis6")
 text = "Options"
 
+[node name="Button5" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../Button3")
+focus_neighbor_bottom = NodePath("../Button4")
+theme_override_colors/font_focus_color = Color(0.72549, 1, 1, 1)
+theme_override_font_sizes/font_size = 75
+theme_override_styles/normal = SubResource("StyleBoxEmpty_kaywn")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_safjg")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_5wkj2")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_teacy")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_vsis6")
+text = "Credits"
+
 [node name="Button4" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-focus_neighbor_bottom = NodePath("../Button")
+focus_neighbor_top = NodePath("../Button5")
+theme_override_colors/font_focus_color = Color(0.72549, 1, 1, 1)
 theme_override_font_sizes/font_size = 75
 theme_override_styles/normal = SubResource("StyleBoxEmpty_kaywn")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_safjg")
@@ -92,7 +104,17 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
+[node name="Indicator" type="Sprite2D" parent="."]
+position = Vector2(59, 241)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("3_kevx6")
+
+[node name="Indicator2" type="Sprite2D" parent="."]
+position = Vector2(59, 241)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("3_kevx6")
+
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Button" to="." method="_on_start_button_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Button2" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Button3" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Button5" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Button4" to="." method="_on_start_button_pressed"]

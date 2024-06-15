@@ -16,10 +16,11 @@ var speed : float = 200
 var sensitivity : int = 5
 
 func _physics_process(delta: float) -> void:
-	player.velocity.y += -35 * delta
 	if player.can_move:
+		player.velocity.y += -35 * delta
 		player.velocity = calculate_velocity(delta)
 		player.move_and_slide()
+		Autoload.player_pos = player.global_position
 	else:
 		state = states.IDLE
 

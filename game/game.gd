@@ -8,11 +8,13 @@ signal Loaded
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	chunk_loader.calculate_chunks(Vector2i(0,0), 3) #TODO make 5 ceili(sensitivity/2)
+	chunk_loader.calculate_chunks(chunk_loader.snap_vector(Vector2(Autoload.player_pos.x,Autoload.player_pos.z)), 5) #TODO make 5 ceili(sensitivity/2)
 	await chunk_loader.ChunksLoaded
 	chunk_loader.updating = true
 	player.can_move = true
-	player.global_position = Vector3(0,0,0)
+	player.global_position = Autoload.player_pos
 	Loaded.emit()
 
-
+func _on_session_timer_timeout() -> void:
+	GameSaver.save_data["play_time"] += 10
+	print(GameSaver.save_data["play_time"])

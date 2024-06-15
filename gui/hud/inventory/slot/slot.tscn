@@ -1,10 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://vas0qbs857jf"]
+[gd_scene load_steps=7 format=3 uid="uid://vas0qbs857jf"]
 
 [ext_resource type="Script" path="res://gui/hud/inventory/slot/slot.gd" id="1_kg12o"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u3xhh"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kvu7n"]
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s2o7l"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e70da"]
+bg_color = Color(1, 0.607843, 0, 0.603922)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
 
 [sub_resource type="LabelSettings" id="LabelSettings_k1uvd"]
 font_size = 18
@@ -27,16 +36,18 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
+[node name="Button" type="Button" parent="MarginContainer"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_u3xhh")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_kvu7n")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_s2o7l")
+theme_override_styles/focus = SubResource("StyleBoxFlat_e70da")
+
 [node name="TextureRect" type="TextureRect" parent="MarginContainer"]
 layout_mode = 2
 mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
-
-[node name="Button" type="Button" parent="MarginContainer"]
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_u3xhh")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_s2o7l")
 
 [node name="QuantityLabel" type="Label" parent="."]
 visible = false

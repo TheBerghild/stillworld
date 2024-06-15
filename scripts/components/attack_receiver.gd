@@ -1,4 +1,4 @@
-extends Node3D
+extends Node
 
 class_name AttackReceiver
 
@@ -6,6 +6,7 @@ class_name AttackReceiver
 @export var max_health : int
 @export var text : String
 @export var detection_area : Area3D
+@export var weakness : AttackData.weapon_types
 
 var uid : int
 
@@ -15,7 +16,10 @@ var health:
 			root.die()
 		health = new_health
 
-func hit(damage : int):
+func hit(attack_data : AttackData):
+	var damage = attack_data.calculate_damage()
+	if attack_data.type == weakness:
+		damage *= 2
 	root.hit()
 	Autoload.EnemyDamaged.emit(text,((health-damage)*100)/max_health,(health*100)/max_health,uid)
 	health -= damage

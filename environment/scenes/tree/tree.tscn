@@ -18,8 +18,9 @@ script = ExtResource("2_kp3tr")
 slot_data = SubResource("Resource_t41sw")
 quantity_randomization = 1
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_vi0fi"]
-size = Vector3(1.5, 2.358, 1.4)
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_nyrbi"]
+height = 2.4
+radius = 0.610424
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_71tbl"]
 height = 1.90607
@@ -78,20 +79,21 @@ collision_mask = 0
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1628, 0)
-shape = SubResource("BoxShape3D_vi0fi")
+shape = SubResource("CylinderShape3D_nyrbi")
 
-[node name="AttackReceiver" type="Node3D" parent="StaticBody3D" node_paths=PackedStringArray("root", "detection_area")]
+[node name="AttackReceiver" type="Node" parent="StaticBody3D" node_paths=PackedStringArray("root", "detection_area")]
 script = ExtResource("3_6oroh")
 root = NodePath("../..")
 max_health = 30
 text = "Tree"
-detection_area = NodePath("Area3D")
+detection_area = NodePath("../Area3D")
+weakness = 2
 
-[node name="Area3D" type="Area3D" parent="StaticBody3D/AttackReceiver"]
+[node name="Area3D" type="Area3D" parent="StaticBody3D"]
 collision_layer = 0
 collision_mask = 2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D/AttackReceiver/Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D/Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 shape = SubResource("CylinderShape3D_71tbl")
 

@@ -3,17 +3,18 @@ extends Node
 const DROPPED_ITEM = preload("res://game/core/dropped_item/dropped_item.tscn")
 
 signal ShakeCamera(trauma)
-signal EnterIndoorScene(scene : PackedScene)
-signal ExitIndoor
+signal TeleportIndoor
+signal TeleportOutdoor
 signal SendMessage(message : StringName)
 signal EnemyDamaged
 signal ExitedEnemyRadius
 signal PlayerHealthChanged
 signal PlayerHandUpdated
 
+var seed
 var player_pos : Vector3
 var player_health : int = 100 : set = set_player_health
-var player_inventory: InventoryData = preload("res://test_inventory.tres").duplicate()
+var player_inventory: InventoryData
 var is_joy_mode = false
 var input_mode : input_modes = input_modes.GAME
 enum input_modes {INVENTORY,GAME}
@@ -25,6 +26,9 @@ var player_hand_slot_index : int = 0 :
 		player_hand_slot_index = posmod(new, 6)
 		PlayerHandUpdated.emit()
 		DebugMenu.print_to_menu("player_hand_slot_index", str(player_hand_slot_index))
+
+func set_player_pos():
+	player_pos = GameSaver.save_data["player_pos"]
 
 func set_player_health(new_health):
 	if player_health < 1:
@@ -40,6 +44,7 @@ func drop_loot(loot_data : LootData, pos : Vector3):
 	new_item.global_position = pos
 
 func _ready() -> void:
+	GameSaver.SaveLoaded.connect(set_player_pos)
 	#TranslationServer.set_locale("tr")
 	new_action.pressed = true
 	input_hold_timer = Timer.new()

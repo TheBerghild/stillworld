@@ -9,25 +9,22 @@ extends Node
 var last_player_pos : Vector3
 
 func _ready() -> void:
-	Autoload.EnterIndoorScene.connect(enter_scene)
-	Autoload.ExitIndoor.connect(return_to_world)
+	Autoload.TeleportIndoor.connect(teleport_indoor)
+	Autoload.TeleportOutdoor.connect(teleport_outdoor)
 
-func enter_scene(scene : PackedScene):
+func teleport_indoor(pos : Vector3):
 	last_player_pos = player.global_position
 	TransitionManager.close()
 	await TransitionManager.Finished
-	indoor_scenes.add_child(scene.instantiate())
-	player.global_position = indoor_scenes.global_position
+	player.global_position = pos
 	chunks.hide()
 	player.sync_camera()
 	chunk_loader.updating = false
 	TransitionManager.open()
 	
-func return_to_world():
+func teleport_outdoor(pos : Vector3):
 	TransitionManager.close()
 	await TransitionManager.Finished
-	for child in indoor_scenes.get_children():
-		child.queue_free()
 	player.global_position = last_player_pos
 	chunks.show()
 	player.sync_camera()

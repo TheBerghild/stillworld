@@ -8,6 +8,7 @@ const BLOOD = preload("res://simple_hit/Blood/blood.tscn")
 @onready var animation_tree: AnimationTree = $Animation/AnimationTree
 @onready var camera_pivot: Node3D = $CameraPivot
 @onready var hit_sfx: AudioStreamPlayer = $HitSFX
+@onready var hand_manager: Node = $Components/HandManager
 
 @export var can_move := true
 
@@ -24,11 +25,17 @@ func _process(delta: float) -> void:
 				gpu_particles_3d.process_material.set("color", lerp(gpu_particles_3d.process_material.get("color"), Color.DARK_OLIVE_GREEN, 0.04))
 			1:
 				gpu_particles_3d.process_material.set("color", lerp(gpu_particles_3d.process_material.get("color"), Color.BISQUE, 0.04))
+	
 	if Input.is_action_pressed("Attack") and attack_cooldown.is_stopped():
-		if animation_tree.get("parameters/Attack/active") == true: return
+		if animation_tree.get("parameters/Attack/active") == true : return
+		if hand_manager.is_armed:
+			animation_tree.set("parameters/ArmState/transition_request", "armed")
+		else:
+			animation_tree.set("parameters/ArmState/transition_request", "unarmed")
+		print("attack")
 		attack_cooldown.start()
 		animation_tree.set("parameters/Attack/request", 1)
-	Autoload.player_pos = global_position
+
 
 func sync_camera():
 	camera_pivot.global_position = global_position
@@ -38,3 +45,6 @@ func hit(drc):
 	hit_sfx.play()
 	add_child(BLOOD.instantiate())
 	animation_tree.set("parameters/Hit/request",1)
+
+func save():
+	GameSaver.save_data["player_pos"] = global_position

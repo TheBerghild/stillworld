@@ -503,8 +503,9 @@ layout_mode = 3
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
+offset_left = -960.0
 offset_top = -158.0
-offset_right = 1920.0
+offset_right = 960.0
 offset_bottom = 20.0
 grow_horizontal = 2
 script = ExtResource("11_nos2s")
@@ -578,7 +579,7 @@ playback_default_blend_time = 5.0
 [node name="IndoorScenes" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -75.6673, 0)
 
-[node name="Player" parent="." instance=ExtResource("5_slllj")]
+[node name="Player" parent="." groups=["Save"] instance=ExtResource("5_slllj")]
 can_move = false
 
 [node name="Camera3D" type="Camera3D" parent="."]
@@ -601,5 +602,10 @@ noise = SubResource("FastNoiseLite_g5ttc")
 [node name="IndoorsHandler" type="Node" parent="StandaloneHandlers"]
 script = ExtResource("5_2kpmc")
 
+[node name="SessionTimer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
 [connection signal="visibility_changed" from="HUD/Hotbar/Hotbar" to="HUD/Hotbar/Hotbar" method="_on_visibility_changed"]
 [connection signal="timeout" from="HUD/EnemyHealthBar/HideTimer" to="HUD/EnemyHealthBar" method="_on_hide_timer_timeout"]
+[connection signal="timeout" from="SessionTimer" to="." method="_on_session_timer_timeout"]

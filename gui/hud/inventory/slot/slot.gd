@@ -13,6 +13,10 @@ var inventory_reference : InventoryData
 var inventory_index : int
 var slot_data : SlotData
 
+func _ready() -> void:
+	if Autoload.is_joy_mode == false:
+		button.focus_mode =Control.FOCUS_NONE
+
 func set_slot_data(new_slot_data : SlotData) -> void:
 	slot_data = new_slot_data
 	refresh()
