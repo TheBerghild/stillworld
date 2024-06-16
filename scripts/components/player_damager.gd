@@ -8,5 +8,5 @@ class_name PlayerDamager
 func hit():
 	if area.has_overlapping_bodies():
 		Autoload.player_health -= attack.calculate_damage()
-	Autoload.ShakeCamera.emit(0.3)
+		Autoload.ShakeCamera.emit(0.3)
 	

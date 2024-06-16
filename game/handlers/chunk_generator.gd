@@ -47,7 +47,7 @@ func scatter(type : int) -> Array[ChunkObject]:
 
 func populate() -> Array[ChunkObject]:
 	var objects : Array[ChunkObject]
-	for i in rng.randi_range(0, 1):
+	for i in rng.randi_range(0, 2):
 		var enemy = ChunkObject.new()
 		enemy.scene = ENEMY
 		enemy.position.x = rng.randf_range(8.7,-8.7)

@@ -28,6 +28,7 @@ func _process(delta: float) -> void:
 	
 	if Input.is_action_pressed("Attack") and attack_cooldown.is_stopped():
 		if animation_tree.get("parameters/Attack/active") == true : return
+		if animation_tree.get("parameters/Hit/active") == true : return
 		if hand_manager.is_armed:
 			animation_tree.set("parameters/ArmState/transition_request", "armed")
 		else:

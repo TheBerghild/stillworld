@@ -31,28 +31,28 @@ radius = 15.2421
 [sub_resource type="BoxShape3D" id="BoxShape3D_jr4ex"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_lp1tq"]
-animation = &"HitRecieve"
+animation = &"Bite_Front"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_pbrs5"]
 animation = &"Walk"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_d78hr"]
-animation = &"Bite_Front"
+animation = &"HitRecieve"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_luyhm"]
 animation = &"Idle"
-
-[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_34m7o"]
-fadein_time = 0.1
-fadeout_time = 0.1
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_fbgpk"]
 fadein_time = 0.1
 fadeout_time = 0.2
 
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_34m7o"]
+mix_mode = 1
+fadein_time = 0.1
+fadeout_time = 0.1
+
 [sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_ynwmx"]
-sync = true
-xfade_time = 0.6
+xfade_time = 0.1
 input_0/name = "idle"
 input_0/auto_advance = false
 input_0/reset = true
@@ -61,7 +61,7 @@ input_1/auto_advance = false
 input_1/reset = true
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_nqohi"]
-graph_offset = Vector2(-324.56, 0.467819)
+graph_offset = Vector2(-204, 2)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_luyhm")
 nodes/Animation/position = Vector2(-200, 40)
 "nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_lp1tq")
@@ -70,38 +70,41 @@ nodes/Animation/position = Vector2(-200, 40)
 "nodes/Animation 3/position" = Vector2(-200, 200)
 "nodes/Animation 4/node" = SubResource("AnimationNodeAnimation_d78hr")
 "nodes/Animation 4/position" = Vector2(60, 420)
-nodes/Attack/node = SubResource("AnimationNodeOneShot_34m7o")
-nodes/Attack/position = Vector2(440, 220)
-nodes/Hit/node = SubResource("AnimationNodeOneShot_fbgpk")
-nodes/Hit/position = Vector2(200, 160)
+nodes/Attack/node = SubResource("AnimationNodeOneShot_fbgpk")
+nodes/Attack/position = Vector2(200, 160)
+nodes/Hit/node = SubResource("AnimationNodeOneShot_34m7o")
+nodes/Hit/position = Vector2(440, 220)
 nodes/Transition/node = SubResource("AnimationNodeTransition_ynwmx")
 nodes/Transition/position = Vector2(-20, 80)
 nodes/output/position = Vector2(540, 140)
-node_connections = [&"Attack", 0, &"Hit", &"Attack", 1, &"Animation 4", &"Hit", 0, &"Transition", &"Hit", 1, &"Animation 2", &"Transition", 0, &"Animation", &"Transition", 1, &"Animation 3", &"output", 0, &"Attack"]
+node_connections = [&"Attack", 0, &"Transition", &"Attack", 1, &"Animation 2", &"Hit", 0, &"Attack", &"Hit", 1, &"Animation 4", &"Transition", 0, &"Animation", &"Transition", 1, &"Animation 3", &"output", 0, &"Hit"]
 
 [sub_resource type="Resource" id="Resource_dmo73"]
 script = ExtResource("12_2kk2m")
-base_damage = 10
-critical_multiplier = 1.4
-critical_chance = 30
+base_damage = 5
+critical_multiplier = 0.0
+critical_chance = 0
 is_splash = false
 type = 0
 
 [node name="Enemy" type="CharacterBody3D"]
-collision_layer = 5
+collision_layer = 4
+collision_mask = 7
+axis_lock_linear_y = true
 script = ExtResource("1_anygm")
+max_speed = 3.0
 
 [node name="Crab2" parent="." instance=ExtResource("2_le1bf")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
 [node name="Skeleton3D" parent="Crab2/MonsterArmature" index="0"]
-bones/1/position = Vector3(-7.80307e-18, 0.113017, 0.500829)
-bones/2/position = Vector3(0, 0.525001, 0)
-bones/4/rotation = Quaternion(-8.67362e-19, 2.8129e-09, 0.00271191, 0.999996)
-bones/5/position = Vector3(-0.501702, 0.423633, 0.448326)
-bones/5/rotation = Quaternion(-0.0381006, 0.008104, 0.0392924, 0.998468)
-bones/6/position = Vector3(0.501702, 0.423633, 0.448326)
-bones/6/rotation = Quaternion(-0.0381005, -0.008104, -0.0392924, 0.998468)
+bones/0/position = Vector3(0, 0.0135069, -0.108169)
+bones/0/rotation = Quaternion(0.028156, 0, 0, 0.999604)
+bones/2/position = Vector3(0, 0.41962, 0)
+bones/2/rotation = Quaternion(0.0377914, 0, -7.45721e-18, 0.999286)
+bones/4/rotation = Quaternion(0.011528, 0, -2.3692e-10, 0.999934)
+bones/5/position = Vector3(-0.501702, 0.391603, 0.448326)
+bones/6/position = Vector3(0.501702, 0.391603, 0.448326)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Crab2")
@@ -112,7 +115,7 @@ libraries = {
 [node name="AttackReceiver" type="Node" parent="." node_paths=PackedStringArray("root", "detection_area")]
 script = ExtResource("8_yg6xh")
 root = NodePath("..")
-max_health = 25
+max_health = 20
 text = "Crab"
 detection_area = NodePath("../DetectionArea")
 weakness = 1
@@ -156,9 +159,9 @@ parameters/Attack/request = 0
 parameters/Hit/active = false
 parameters/Hit/internal_active = false
 parameters/Hit/request = 0
-parameters/Transition/current_state = "idle"
+parameters/Transition/current_state = "walk"
 parameters/Transition/transition_request = ""
-parameters/Transition/current_index = 0
+parameters/Transition/current_index = 1
 
 [node name="PlayerDamager" type="Node" parent="." node_paths=PackedStringArray("area")]
 script = ExtResource("11_j73wa")
